@@ -5,11 +5,77 @@
   <subtitle>This is a longer description about your blog.</subtitle>
   <link href="https://example.com/feed/feed.xml" rel="self" />
   <link href="https://example.com/" />
-  <updated>2023-01-23T00:00:00Z</updated>
+  <updated>2025-04-01T14:10:43Z</updated>
   <id>https://example.com/</id>
   <author>
     <name>Your Name</name>
   </author>
+  <entry>
+    <title>Understanding TLA+ with a Mutual Exclusion Example</title>
+    <link href="https://example.com/blog/tlaplus_sample/" />
+    <updated>2025-04-01T14:10:43Z</updated>
+    <id>https://example.com/blog/tlaplus_sample/</id>
+    <content type="html">&lt;p&gt;A practical introduction to TLA+ through a mutual exclusion algorithm specification&lt;/p&gt;
+&lt;pre class=&quot;language-tla&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-tla&quot;&gt;---- MODULE MutualExclusion ----
+EXTENDS Integers, TLC
+
+CONSTANTS N  &#92;* Number of processes
+
+VARIABLES pc,    &#92;* Program counter for each process
+         flag,   &#92;* Flag array for each process
+         turn    &#92;* Whose turn it is
+
+&#92;* TypeOK ensures all variables have valid values and types
+TypeOK == /&#92; pc &#92;in [1..N -&gt; {&quot;non-critical&quot;, &quot;trying&quot;, &quot;critical&quot;}]
+          /&#92; flag &#92;in [1..N -&gt; {TRUE, FALSE}]
+          /&#92; turn &#92;in 1..N
+
+&#92;* Initial state: all processes start outside critical section
+Init == /&#92; pc = [i &#92;in 1..N |-&gt; &quot;non-critical&quot;]
+        /&#92; flag = [i &#92;in 1..N |-&gt; FALSE]
+        /&#92; turn = 1
+
+&#92;* Process i enters critical section if:
+&#92;* 1. It&#39;s in &quot;trying&quot; state
+&#92;* 2. Its flag is set to TRUE
+&#92;* 3. Either it&#39;s its turn OR no other process has its flag set
+Enter(i) == /&#92; pc[i] = &quot;trying&quot;
+            /&#92; flag[i] = TRUE
+            /&#92; &#92;/ turn = i
+               &#92;/ &#92;A j &#92;in 1..N: ~flag[j]
+            /&#92; pc&#39; = [pc EXCEPT ![i] = &quot;critical&quot;]
+            /&#92; UNCHANGED &lt;&lt;flag, turn=&quot;&quot;&gt;&gt;
+
+&#92;* Process i exits critical section and:
+&#92;* 1. Returns to non-critical state
+&#92;* 2. Clears its flag
+&#92;* 3. Passes turn to next process (wraps around to 1 if at N)
+Exit(i) == /&#92; pc[i] = &quot;critical&quot;
+           /&#92; pc&#39; = [pc EXCEPT ![i] = &quot;non-critical&quot;]
+           /&#92; flag&#39; = [flag EXCEPT ![i] = FALSE]
+           /&#92; turn&#39; = (turn % N) + 1
+           /&#92; UNCHANGED &lt;&lt;&gt;&gt;
+
+&#92;* Process i indicates it wants to enter critical section
+Try(i) == /&#92; pc[i] = &quot;non-critical&quot;
+          /&#92; pc&#39; = [pc EXCEPT ![i] = &quot;trying&quot;]
+          /&#92; UNCHANGED &lt;&lt;flag, turn=&quot;&quot;&gt;&gt;
+
+&#92;* Next state is any process performing any of its actions
+Next == &#92;E i &#92;in 1..N: &#92;/ Enter(i)
+                            &#92;/ Exit(i)
+                            &#92;/ Try(i)
+
+&#92;* Complete specification: initial state and all possible transitions
+Spec == Init /&#92; [][Next]_&lt;&lt;pc, flag,=&quot;&quot; turn=&quot;&quot;&gt;&gt;
+
+&#92;* Safety property: no two processes can be in critical section at same time
+MutualExclusion == &#92;A i, j &#92;in 1..N: 
+                     (i # j) =&gt; ~(pc[i] = &quot;critical&quot; /&#92; pc[j] = &quot;critical&quot;)
+
+====&lt;/pc,&gt;&lt;/flag,&gt;&lt;/flag,&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
   <entry>
     <title>This is a fifth post (draft)</title>
     <link href="https://example.com/blog/fifthpost/" />

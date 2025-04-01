@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Eleventy Base Blog v9</title>
+		<title>Tagged &#39;formal-methods&#39;</title>
 		<meta name="description" content="I am writing about my experiences as a naval navel-gazer.">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Eleventy Base Blog v9">
 
@@ -11,7 +11,59 @@
 		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 		
-		<style>/* Message Box */
+		<style>.posts-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2rem;
+	padding: 1rem;
+}
+
+/* Tablet and larger screens (768px and up) */
+@media (min-width: 768px) {
+	.posts-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+/* Desktop and larger screens (1024px and up) */
+@media (min-width: 1024px) {
+	.posts-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.post-card {
+	background: var(--background-color);
+	border: 1px solid var(--color-gray-20);
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+	transition: transform 0.2s ease;
+}
+
+.post-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.post-card-title {
+	font-size: 1.25rem;
+	margin: 0 0 1rem 0;
+}
+
+.post-card-title a {
+	color: var(--text-color);
+	text-decoration: none;
+}
+
+.post-card-title a:hover {
+	color: var(--text-color-link);
+}
+
+.post-card-date {
+	color: var(--color-gray-50);
+	font-size: 0.875rem;
+}
+/* Message Box */
 .message-box {
 	--color-message-box: #ffc;
 
@@ -339,20 +391,23 @@ header {
 </div>
 <!-- Stop deleting -->
 
-<h1 id="content-not-found">Content not found.</h1>
-<p>Go <a href="/">home</a>.</p>
-<!--
+<h1 id="tagged-formal-methods">Tagged “formal-methods”</h1>
 
-Read more: https://www.11ty.dev/docs/quicktips/not-found/
 
-This is compatible with:
 
-- GitHub Pages: https://help.github.com/articles/creating-a-custom-404-page-for-your-github-pages-site/
-- GitLab Pages: https://docs.gitlab.com/ee/user/project/pages/introduction.html#custom-error-codes-pages
-- Netlify: https://www.netlify.com/docs/redirects/#custom-404
-- Cloudflare Pages: https://developers.cloudflare.com/pages/platform/serving-pages/#not-found-behavior
-- Vercel: https://vercel.com/guides/custom-404-page#static-site-generator-ssg
--->
+
+<div class="posts-grid">
+	<article class="post-card">
+		<h2 class="post-card-title" id="understanding-tla-with-a-mutual-exclusion-example">
+			<a href="/blog/tlaplus_sample/">Understanding TLA+ with a Mutual Exclusion Example</a>
+		</h2>
+		<time class="post-card-date" datetime="2024-03-21">March 2024</time>
+	</article>
+</div>
+
+
+
+<p>See <a href="/tags/">all tags</a>.</p>
 
 
 			</heading-anchors>
@@ -362,7 +417,7 @@ This is compatible with:
 			<p><em>Built with <a href="https://www.11ty.dev/">Eleventy v3.0.0</a></em></p>
 		</footer>
 
-		<!-- This page `/404.html` was built on 2025-04-01T14:10:43.083Z -->
+		<!-- This page `/tags/formal-methods/` was built on 2025-04-01T13:51:28.877Z -->
 		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
 	</body>
 </html>

@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>This is my third post.</title>
-		<meta name="description" content="This is a post on My Blog about win-win survival strategies.">
+		<title>Understanding TLA+ with a Mutual Exclusion Example</title>
+		<meta name="description" content="A practical introduction to TLA+ through a mutual exclusion algorithm specification">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Eleventy Base Blog v9">
 
 		
@@ -478,41 +478,76 @@ header {
 		<main id="skip">
 			<heading-anchors>
 				
-<h1 id="this-is-my-third-post">This is my third post.</h1>
+<h1 id="understanding-tla-with-a-mutual-exclusion-example">Understanding TLA+ with a Mutual Exclusion Example</h1>
 
 <ul class="post-metadata">
-	<li><time datetime="2018-08-24">24 August 2018</time></li>
-	<li><a href="/tags/second-tag/" class="post-tag">second tag</a>, </li>
-	<li><a href="/tags/posts-with-two-tags/" class="post-tag">posts with two tags</a></li>
+	<li><time datetime="2025-04-01">01 April 2025</time></li>
+	<li><a href="/tags/author-preston-p-fastmail-com/" class="post-tag">author:preston.p@fastmail.com</a>, </li>
+	<li><a href="/tags/language-tla/" class="post-tag">language:tla+</a>, </li>
+	<li><a href="/tags/level-of-detail-low/" class="post-tag">level_of_detail:low</a></li>
 </ul>
 
-<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-<h2 id="code">Code</h2>
-<h3 id="this-is-a-very-long-heading-that-i-want-to-wrap-this-is-a-very-long-heading-that-i-want-to-wrap-this-is-a-very-long-heading-that-i-want-to-wrap-this-is-a-very-long-heading-that-i-want-to-wrap">This is a very long heading that I want to wrap This is a very long heading that I want to wrap This is a very long heading that I want to wrap This is a very long heading that I want to wrap</h3>
-<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">// this is a command</span>
-<span class="token keyword">function</span> <span class="token function">myCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">let</span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-	counter<span class="token operator">++</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<p>A practical introduction to TLA+ through a mutual exclusion algorithm specification</p>
+<pre class="language-tla" tabindex="0"><code class="language-tla">---- MODULE MutualExclusion ----
+EXTENDS Integers, TLC
 
-<span class="token comment">// Test with a line break above this line.</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Test'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="heading-with-a-link">Heading with a <a href="#code">link</a></h3>
-<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-<pre><code>// this is a command
-function myCommand() {
-	let counter = 0;
-	counter++;
-}
+CONSTANTS N  \* Number of processes
 
-// Test with a line break above this line.
-console.log('Test');
-</code></pre>
-<h2 id="section-header">Section Header</h2>
-<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
+VARIABLES pc,    \* Program counter for each process
+         flag,   \* Flag array for each process
+         turn    \* Whose turn it is
 
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/secondpost/">This is my second post with a much longer title.</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/fourthpost/">This is my fourth post</a></li>
+\* TypeOK ensures all variables have valid values and types
+TypeOK == /\ pc \in [1..N -> {"non-critical", "trying", "critical"}]
+          /\ flag \in [1..N -> {TRUE, FALSE}]
+          /\ turn \in 1..N
+
+\* Initial state: all processes start outside critical section
+Init == /\ pc = [i \in 1..N |-> "non-critical"]
+        /\ flag = [i \in 1..N |-> FALSE]
+        /\ turn = 1
+
+\* Process i enters critical section if:
+\* 1. It's in "trying" state
+\* 2. Its flag is set to TRUE
+\* 3. Either it's its turn OR no other process has its flag set
+Enter(i) == /\ pc[i] = "trying"
+            /\ flag[i] = TRUE
+            /\ \/ turn = i
+               \/ \A j \in 1..N: ~flag[j]
+            /\ pc' = [pc EXCEPT ![i] = "critical"]
+            /\ UNCHANGED <<flag, turn="">>
+
+\* Process i exits critical section and:
+\* 1. Returns to non-critical state
+\* 2. Clears its flag
+\* 3. Passes turn to next process (wraps around to 1 if at N)
+Exit(i) == /\ pc[i] = "critical"
+           /\ pc' = [pc EXCEPT ![i] = "non-critical"]
+           /\ flag' = [flag EXCEPT ![i] = FALSE]
+           /\ turn' = (turn % N) + 1
+           /\ UNCHANGED <<>>
+
+\* Process i indicates it wants to enter critical section
+Try(i) == /\ pc[i] = "non-critical"
+          /\ pc' = [pc EXCEPT ![i] = "trying"]
+          /\ UNCHANGED <<flag, turn="">>
+
+\* Next state is any process performing any of its actions
+Next == \E i \in 1..N: \/ Enter(i)
+                            \/ Exit(i)
+                            \/ Try(i)
+
+\* Complete specification: initial state and all possible transitions
+Spec == Init /\ [][Next]_<<pc, flag,="" turn="">>
+
+\* Safety property: no two processes can be in critical section at same time
+MutualExclusion == \A i, j \in 1..N: 
+                     (i # j) => ~(pc[i] = "critical" /\ pc[j] = "critical")
+
+====</pc,></flag,></flag,></code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/fifthpost/">This is a fifth post (draft)</a></li>
 </ul>
 
 			</heading-anchors>
@@ -522,7 +557,7 @@ console.log('Test');
 			<p><em>Built with <a href="https://www.11ty.dev/">Eleventy v3.0.0</a></em></p>
 		</footer>
 
-		<!-- This page `/blog/thirdpost/` was built on 2025-04-01T14:10:43.083Z -->
+		<!-- This page `/blog/tlaplus_sample/` was built on 2025-04-01T14:10:43.083Z -->
 		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
 	</body>
 </html>
