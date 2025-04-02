@@ -5,7 +5,7 @@
   <subtitle>This is a longer description about your blog.</subtitle>
   <link href="https://example.com/feed/feed.xml" rel="self" />
   <link href="https://example.com/" />
-  <updated>2025-04-01T14:10:43Z</updated>
+  <updated>2025-04-01T14:10:58Z</updated>
   <id>https://example.com/</id>
   <author>
     <name>Your Name</name>
@@ -13,7 +13,7 @@
   <entry>
     <title>Understanding TLA+ with a Mutual Exclusion Example</title>
     <link href="https://example.com/blog/tlaplus_sample/" />
-    <updated>2025-04-01T14:10:43Z</updated>
+    <updated>2025-04-01T14:10:58Z</updated>
     <id>https://example.com/blog/tlaplus_sample/</id>
     <content type="html">&lt;p&gt;A practical introduction to TLA+ through a mutual exclusion algorithm specification&lt;/p&gt;
 &lt;pre class=&quot;language-tla&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-tla&quot;&gt;---- MODULE MutualExclusion ----
