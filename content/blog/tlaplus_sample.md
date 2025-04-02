@@ -66,5 +66,9 @@ Spec == Init /\ [][Next]_<<pc, flag, turn>>
 MutualExclusion == \A i, j \in 1..N: 
                      (i # j) => ~(pc[i] = "critical" /\ pc[j] = "critical")
 
+Liveness == <> MutualExclusion
+
+\* Testing ligature: =~ =< |= !~ /\ \/ <>
+
 ====
 ```

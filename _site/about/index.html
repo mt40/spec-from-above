@@ -10,6 +10,13 @@
 		
 		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+		
+
 		
 		<style>/* Message Box */
 .message-box {
@@ -307,7 +314,42 @@ header {
 }
 .post-metadata time {
 	margin-right: 1em;
-}</style>
+}
+/* Base font settings for all code elements */
+		pre code,
+		pre code *,
+		pre code span *,
+		.hljs,
+		.hljs *,
+		.hljs span *,
+		.code-sample,
+		.code-sample *,
+		.code-sample span * {
+			font-family: "Fira Code", monospace !important;
+			font-variant-ligatures: common-ligatures !important;
+			font-feature-settings: 
+				"liga" 1,    /* Standard ligatures */
+				"calt" 1,    /* Contextual alternates */
+				"dlig" 1,    /* Discretionary ligatures */
+				"ss01" 1,    /* Style set 1 - includes \/ for ∨ */
+				"ss02" 1,    /* Style set 2 - includes <> for ≠ */
+				"ss03" 1,    /* Style set 3 - includes more operators */
+				"ss04" 1,    /* Style set 4 - includes more operators */
+				"ss05" 1,    /* Style set 5 - includes more operators */
+				"ss06" 1,    /* Style set 6 - includes more operators */
+				"ss07" 1 !important;    /* Style set 7 - includes more operators */
+		}
+
+		/* Override any highlight.js font settings */
+		.hljs {
+			font-family: "Fira Code", monospace !important;
+		}</style>
+
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+		
+		
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
@@ -350,7 +392,7 @@ header {
 			<p><em>Built with <a href="https://www.11ty.dev/">Eleventy v3.0.0</a></em></p>
 		</footer>
 
-		<!-- This page `/about/` was built on 2025-04-02T01:50:54.320Z -->
-		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+		<!-- This page `/about/` was built on 2025-04-02T08:48:33.351Z -->
+		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>

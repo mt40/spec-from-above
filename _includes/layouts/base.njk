@@ -7,12 +7,17 @@
 		<meta name="description" content="{{ description or metadata.description }}">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
 
-		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
+		{#- Uncomment this if you'd like folks to know that you used Eleventy to build your site!  #}
 		{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
 
 		{# Daisy UI CSS components #}
 		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+		{# A ligature font #}
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
 
 		{#-
 		Plain-text bundles are provided via the `eleventy-plugin-bundle` plugin:
@@ -32,6 +37,39 @@
 		{#- Or you can add from node_modules #}
 		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
 
+		{# Enable ligatures for code blocks #}
+		{%- css %}
+		/* Base font settings for all code elements */
+		pre code,
+		pre code *,
+		pre code span *,
+		.hljs,
+		.hljs *,
+		.hljs span *,
+		.code-sample,
+		.code-sample *,
+		.code-sample span * {
+			font-family: "Fira Code", monospace !important;
+			font-variant-ligatures: common-ligatures !important;
+			font-feature-settings: 
+				"liga" 1,    /* Standard ligatures */
+				"calt" 1,    /* Contextual alternates */
+				"dlig" 1,    /* Discretionary ligatures */
+				"ss01" 1,    /* Style set 1 - includes \/ for ∨ */
+				"ss02" 1,    /* Style set 2 - includes <> for ≠ */
+				"ss03" 1,    /* Style set 3 - includes more operators */
+				"ss04" 1,    /* Style set 4 - includes more operators */
+				"ss05" 1,    /* Style set 5 - includes more operators */
+				"ss06" 1,    /* Style set 6 - includes more operators */
+				"ss07" 1 !important;    /* Style set 7 - includes more operators */
+		}
+
+		/* Override any highlight.js font settings */
+		.hljs {
+			font-family: "Fira Code", monospace !important;
+		}
+		{% endcss %}
+
 		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
 		<style>{% getBundle "css" %}</style>
 		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
@@ -39,6 +77,52 @@
 
 		{#- Add the heading-anchors web component to the JavaScript bundle #}
 		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
+
+		{# Add highlight.js CSS and JavaScript #}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+		{# <script src="https://cdn.jsdelivr.net/gh/konnov/tlaplus-highlightjs/tlaplus-minified.js"></script> #}
+		{%- js %}{% include "public/js/highlight.js" %}{% endjs %}
+		{# <script>
+			function tlaHljs(hljs) {
+				const n = {
+				keyword: [
+					'ACTION', 'ASSUME', 'ASSUMPTION', 'AXIOM', 'BY', 'CASE', 'CONSTANT',
+					'CONSTANTS', 'DEF', 'DEFINE', 'DEFS', 'DOMAIN', 'ELSE', 'ENABLED',
+					'EXCEPT', 'EXTENDS', 'HAVE', 'HIDE', 'IF', 'IN', 'INSTANCE', 'LAMBDA',
+					'LEMMA', 'LET', 'LOCAL', 'MODULE', 'NEW', 'OBVIOUS', 'OMITTED', 'OTHER',
+					'PICK', 'PROOF', 'PROPOSITION', 'PROOF', 'PROPOSITION', 'PROVE', 'QED',
+					'RECURSIVE', 'STATE', 'SUBSET', 'SUFFICES', 'TAKE', 'TEMPORAL',
+					'THEN', 'THEOREM', 'UNCHANGED', 'UNION', 'USE', 'VARIABLE', 'VARIABLES',
+					'WITH', 'WITNESS'
+				],
+				literal: [
+					'FALSE', 'TRUE', 'BOOLEAN', 'STRING', 'Int', 'Nat', 'Real', 'Seq',
+				],
+				punctuation: [ ',', '(', ')', '{', '}', '[', ']', ']_', '>>_' ],
+				};
+
+				return {
+				name: 'TLA+',
+				case_insensitive: false,
+				keywords: n,
+				contains: [
+					hljs.QUOTE_STRING_MODE,
+					hljs.C_NUMBER_MODE,
+					hljs.COMMENT('\\\\\\*', '$'),
+					hljs.COMMENT('\\(\\*', '\\*\\)'),
+					{
+					className: 'symbol',
+					begin: /\\[A-Za-z]+|\\|\/|WF_|SF_|'|\|->|\[\]|\(\+\)|\(-\)|\(\\X\)|\(\/\)|\(\.\)|&|\||@@|##|\$|\?|\!|~|~>|<=>|=>|>=|<=|>>|<<|<:|>|<|:=|==|=|\/=|#=|\.|\*|\+|-|\/|%|::=|:|:>|\^\^|\^\+|\^\*|\^\#|\^/,
+					},
+				],
+				};
+			}
+			hljs.registerLanguage('tlaplus', tlaHljs);
+			hljs.registerLanguage('tla', tlaHljs);
+			
+			hljs.highlightAll();
+		</script> #}
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>

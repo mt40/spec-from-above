@@ -73,6 +73,10 @@ Spec == Init /&#92; [][Next]_&lt;&lt;pc, flag,=&quot;&quot; turn=&quot;&quot;&gt
 MutualExclusion == &#92;A i, j &#92;in 1..N: 
                      (i # j) =&gt; ~(pc[i] = &quot;critical&quot; /&#92; pc[j] = &quot;critical&quot;)
 
+Liveness == &lt;&gt; MutualExclusion
+
+&#92;* Testing ligature: =~ =&lt; |= !~ /&#92; &#92;/ &lt;&gt;
+
 ====&lt;/pc,&gt;&lt;/flag,&gt;&lt;/flag,&gt;&lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
