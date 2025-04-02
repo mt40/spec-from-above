@@ -147,8 +147,27 @@
 			</heading-anchors>
 		</main>
 
-		<footer>
-			<p><em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em></p>
+		<footer class="mt-auto" style="background-color: #7FFFD4;">
+			<div class="container mx-auto px-4 py-8">
+				<div class="grid grid-cols-2 gap-8">
+					<div>
+						<h3 class="font-bold mb-4">Open Source</h3>
+						<ul>
+							<li><a href="https://github.com/mt40/spec-from-above" class="hover:underline">GitHub</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="font-bold mb-4">Author</h3>
+						<ul>
+							<li><a href="mailto:preston.p@fastmail.com" class="hover:underline">preston.p@fastmail.com</a></li>
+							<li><a href="/blog" class="hover:underline">My Blog</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="text-center mt-6 text-sm">
+					<p><em>Built with <a href="https://www.11ty.dev/" class="hover:underline">{{ eleventy.generator }}</a></em></p>
+				</div>
+			</div>
 		</footer>
 
 		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->

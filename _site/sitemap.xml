@@ -27,11 +27,6 @@
 	</url>
 	
 	<url>
-		<loc>https://example.com/blog/tlaplus_sample/</loc>
-		<lastmod>2025-04-01</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://example.com/about/</loc>
 		<lastmod>2025-04-02</lastmod>
 	</url>
@@ -48,6 +43,11 @@
 	
 	<url>
 		<loc>https://example.com/tags/</loc>
+		<lastmod>2025-04-02</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://example.com/blog/tlaplus_sample/</loc>
 		<lastmod>2025-04-02</lastmod>
 	</url>
 	
