@@ -137,6 +137,7 @@
 				{%- for entry in collections.all | eleventyNavigation %}
 					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
 				{%- endfor %}
+					<li class="nav-item"><a href="{{ metadata.contribute_url }}">Contribute</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -153,13 +154,13 @@
 					<div>
 						<h3 class="font-bold mb-4">Open Source</h3>
 						<ul>
-							<li><a href="https://github.com/mt40/spec-from-above" class="hover:underline">GitHub</a></li>
+							<li><a href="{{ metadata.github }}" class="hover:underline">GitHub</a></li>
 						</ul>
 					</div>
 					<div>
 						<h3 class="font-bold mb-4">Author</h3>
 						<ul>
-							<li><a href="mailto:preston.p@fastmail.com" class="hover:underline">preston.p@fastmail.com</a></li>
+							<li><a href="mailto:{{ metadata.author.email }}" class="hover:underline">{{ metadata.author.email }}</a></li>
 							<li><a href="/blog" class="hover:underline">My Blog</a></li>
 						</ul>
 					</div>
