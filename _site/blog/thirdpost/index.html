@@ -74,12 +74,15 @@ body {
 	font-family: var(--font-family);
 	color: var(--text-color);
 	background-color: var(--background-color);
+	min-height: 100vh; /* Ensure minimum height is full viewport */
 }
 html {
 	overflow-y: scroll;
 }
 body {
 	max-width: 60em;
+	display: flex;          /* Add flex display */
+	flex-direction: column; /* Stack children vertically */
 }
 
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
@@ -134,6 +137,12 @@ a[href]:visited {
 a[href]:hover,
 a[href]:active {
 	color: var(--text-color-link-active);
+}
+
+/* Make main content grow to push footer down */
+main {
+	flex: 1;               /* Allow main to grow and fill space */
+	width: 100%;          /* Ensure full width */
 }
 
 main,
@@ -417,7 +426,7 @@ console.log('Test');
 			</div>
 		</footer>
 
-		<!-- This page `/blog/thirdpost/` was built on 2025-04-02T09:30:32.088Z -->
+		<!-- This page `/blog/thirdpost/` was built on 2025-04-03T00:05:01.895Z -->
 		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>
