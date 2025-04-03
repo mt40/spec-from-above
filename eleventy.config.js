@@ -63,11 +63,12 @@ export default async function(eleventyConfig) {
 		},
 		metadata: {
 			language: "en",
-			title: "Blog Title",
-			subtitle: "This is a longer description about your blog.",
-			base: "https://example.com/",
+			title: "SpecStack",
+			subtitle: "A free library of software specifications",
+			base: "https://prestonp.github.com/specstack",
 			author: {
-				name: "Your Name"
+				name: "Preston Pham",
+				email: "preston.p@fastmail.com"
 			}
 		}
 	});
