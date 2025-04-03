@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Read: https://daisyui.com/docs/themes/ */
+
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, wireframe;
+}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ metadata.language }}">
+<html lang="{{ metadata.language }}" data-theme="wireframe">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +35,7 @@
 		{%- css %}/* This is an arbitrary CSS string added to the bundle */{% endcss %}
 		{#- Add the contents of a file to the bundle #}
 		{%- css %}{% include "public/css/index.css" %}{% endcss %}
+		{%- css %}{% include "public/css/theme.css" %}{% endcss %}
 		{#- Or you can add from node_modules #}
 		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
 
@@ -80,9 +81,10 @@
 		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
 
 		{# Add highlight.js CSS and JavaScript #}
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+
+		{# view themes here: https://highlightjs.org/examples #}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/solarized-light.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-		{# <script src="https://cdn.jsdelivr.net/gh/konnov/tlaplus-highlightjs/tlaplus-minified.js"></script> #}
 		{%- js %}{% include "public/js/highlight.js" %}{% endjs %}
 		{# <script>
 			function tlaHljs(hljs) {
@@ -129,7 +131,7 @@
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
 
 		{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-		<div class="navbar bg-base-100 shadow-sm">
+		<div class="navbar bg-accent shadow-sm">
 			<div class="flex-1">
 				<a href="/" class="home-link btn btn-ghost text-xl">{{ metadata.title }}</a>
 			</div>

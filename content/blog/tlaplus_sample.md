@@ -2,7 +2,7 @@
 title: "Understanding TLA+ with a Mutual Exclusion Example"
 date: "git Last Modified"
 description: "A practical introduction to TLA+ through a mutual exclusion algorithm specification"
-tags: ["author:preston.p@fastmail.com", "language:tla+", "level_of_detail:low"]
+tags: ["author -- preston.p@fastmail.com", "language -- TLA+", "level of detail -- low"]
 ---
 
 
