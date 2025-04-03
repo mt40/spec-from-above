@@ -1,66 +1,20 @@
-{%- css %}
-.posts-grid {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap: 2rem;
-	padding: 1rem;
-}
-
-/* Tablet and larger screens (768px and up) */
-@media (min-width: 768px) {
-	.posts-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-
-/* Desktop and larger screens (1024px and up) */
-@media (min-width: 1024px) {
-	.posts-grid {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-
-.post-card {
-	background: var(--background-color);
-	border: 1px solid var(--color-gray-20);
-	border-radius: 0.5rem;
-	padding: 1.5rem;
-	transition: transform 0.2s ease;
-}
-
-.post-card:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.post-card-title {
-	font-size: 1.25rem;
-	margin: 0 0 1rem 0;
-}
-
-.post-card-title a {
-	color: var(--text-color);
-	text-decoration: none;
-}
-
-.post-card-title a:hover {
-	color: var(--text-color-link);
-}
-
-.post-card-date {
-	color: var(--color-gray-50);
-	font-size: 0.875rem;
-}
-{% endcss %}
+{%- css %}{% include "public/css/postlist.css" %}{% endcss %}
 
 <div class="posts-grid">
-{%- for post in postslist | reverse %}
-	<article class="post-card{% if post.url == url %} postlist-item-active{% endif %}">
-		<h2 class="post-card-title">
-			<a href="{{ post.url }}">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
-		</h2>
-		<time class="post-card-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time>
-	</article>
-{%- endfor %}
+	{%- for post in postslist | reverse %}
+		<div class="post-card card bg-base-100 shadow-sm">
+			<div class="card-body">
+				<h2 class="card-title">
+					<a href="{{ post.url }}">
+						{% if post.data.title %}{{ post.data.title }}
+						{% else %}
+							<code>{{ post.url }}</code>
+						{% endif %}
+					</a>
+				</h2>
+				<time class="post-card-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time>
+				<p>{{ post.description }}</p>
+			</div>
+		</div>
+	{%- endfor %}
 </div>
-

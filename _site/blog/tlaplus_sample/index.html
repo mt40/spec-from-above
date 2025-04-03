@@ -11,6 +11,7 @@
 		
 		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css">
 
 		
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -345,35 +346,54 @@ header {
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
-
-		<header>
-			<a href="/" class="home-link">SpecStack</a>
-			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
-				<ul class="nav">
-					<li class="nav-item"><a href="/">Home</a></li>
-					<li class="nav-item"><a href="/blog/">Archive</a></li>
-					<li class="nav-item"><a href="/about/">About</a></li>
-					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+		<div class="navbar bg-base-100 shadow-sm">
+			<div class="flex-1">
+				<a href="/" class="home-link btn btn-ghost text-xl">SpecStack</a>
+			</div>
+			<div class="flex-none">
+				<ul class="menu menu-horizontal px-1">
+						<li class="nav-item"><a href="/">Home</a></li>
+						<li class="nav-item"><a href="/blog/">Archive</a></li>
+						<li class="nav-item"><a href="/about/">About</a></li>
+						<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
 					<li class="nav-item"><a href="https://github.com/prestonp/specstack">Contribute</a></li>
 				</ul>
-			</nav>
-		</header>
+			</div>
+		</div>
 
 		<main id="skip">
 			<heading-anchors>
 				
-<h1 id="understanding-tla-with-a-mutual-exclusion-example">Understanding TLA+ with a Mutual Exclusion Example</h1>
+<h1 class="text-2xl mb-8 font-bold" id="understanding-tla-with-a-mutual-exclusion-example">Understanding TLA+ with a Mutual Exclusion Example</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2025-04-02">02 April 2025</time></li>
-	<li><a href="/tags/author-preston-p-fastmail-com/" class="post-tag">author:preston.p@fastmail.com</a>, </li>
-	<li><a href="/tags/language-tla/" class="post-tag">language:tla+</a>, </li>
-	<li><a href="/tags/level-of-detail-low/" class="post-tag">level_of_detail:low</a></li>
-</ul>
+<div>
+	<time datetime="2025-04-02">02 April 2025</time>
+</div>
 
-<p>A practical introduction to TLA+ through a mutual exclusion algorithm specification</p>
-<pre class="language-tla" tabindex="0"><code class="language-tla">---- MODULE MutualExclusion ----
+<div class="mb-8">
+	<ul class="post-metadata">
+		<li>
+			<div class="badge badge-dash badge-neutral">
+				<a href="/tags/author-preston-p-fastmail-com/" class="post-tag">author:preston.p@fastmail.com</a>
+			</div>
+		</li>
+		<li>
+			<div class="badge badge-dash badge-neutral">
+				<a href="/tags/language-tla/" class="post-tag">language:tla+</a>
+			</div>
+		</li>
+		<li>
+			<div class="badge badge-dash badge-neutral">
+				<a href="/tags/level-of-detail-low/" class="post-tag">level_of_detail:low</a>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<p class="mb-8">A practical introduction to TLA+ through a mutual exclusion algorithm specification</p>
+
+<div class="mb-8">
+	<pre class="language-tla" tabindex="0"><code class="language-tla">---- MODULE MutualExclusion ----
 EXTENDS Integers, TLC
 
 CONSTANTS N  \* Number of processes
@@ -436,36 +456,29 @@ Liveness == <> MutualExclusion
 
 ====</pc,></flag,></flag,></code></pre>
 
+</div>
 
 
 
 			</heading-anchors>
 		</main>
 
-		<footer class="mt-auto" style="background-color: #7FFFD4;">
-			<div class="container mx-auto px-4 py-8">
-				<div class="grid grid-cols-2 gap-8">
-					<div>
-						<h3 class="font-bold mb-4" id="open-source">Open Source</h3>
-						<ul>
-							<li><a href="https://github.com/prestonp/specstack" class="hover:underline">GitHub</a></li>
-						</ul>
-					</div>
-					<div>
-						<h3 class="font-bold mb-4" id="author">Author</h3>
-						<ul>
-							<li><a href="mailto:preston.pham@fastmail.com" class="hover:underline">preston.pham@fastmail.com</a></li>
-							<li><a href="/blog" class="hover:underline">My Blog</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="text-center mt-6 text-sm">
-					<p><em>Built with <a href="https://www.11ty.dev/" class="hover:underline">Eleventy v3.0.0</a></em></p>
-				</div>
-			</div>
+		<footer class="footer sm:footer-horizontal bg-accent text-accent-content p-10">
+			<nav>
+				<h6 class="footer-title" id="open-source">Open Source</h6>
+				<a href="https://github.com/prestonp/specstack" class="link link-hover">GitHub</a>
+			</nav>
+			<nav>
+				<h6 class="footer-title" id="author">Author</h6>
+				<a href="mailto:preston.pham@fastmail.com" class="link link-hover">preston.pham@fastmail.com</a>
+				<a href="/blog" class="link link-hover">My Blog</a>
+			</nav>
+			<nav>
+				<a href="https://www.11ty.dev/" class="link link-hover">Made with Eleventy v3.0.0</a>
+			</nav>
 		</footer>
 
-		<!-- This page `/blog/tlaplus_sample/` was built on 2025-04-03T00:15:14.881Z -->
+		<!-- This page `/blog/tlaplus_sample/` was built on 2025-04-03T13:04:08.039Z -->
 		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>

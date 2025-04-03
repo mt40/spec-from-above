@@ -11,6 +11,7 @@
 		
 		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css">
 
 		
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -345,67 +346,72 @@ header {
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
-
-		<header>
-			<a href="/" class="home-link">SpecStack</a>
-			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
-				<ul class="nav">
-					<li class="nav-item"><a href="/">Home</a></li>
-					<li class="nav-item"><a href="/blog/">Archive</a></li>
-					<li class="nav-item"><a href="/about/">About</a></li>
-					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+		<div class="navbar bg-base-100 shadow-sm">
+			<div class="flex-1">
+				<a href="/" class="home-link btn btn-ghost text-xl">SpecStack</a>
+			</div>
+			<div class="flex-none">
+				<ul class="menu menu-horizontal px-1">
+						<li class="nav-item"><a href="/">Home</a></li>
+						<li class="nav-item"><a href="/blog/">Archive</a></li>
+						<li class="nav-item"><a href="/about/">About</a></li>
+						<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
 					<li class="nav-item"><a href="https://github.com/prestonp/specstack">Contribute</a></li>
 				</ul>
-			</nav>
-		</header>
+			</div>
+		</div>
 
 		<main id="skip">
 			<heading-anchors>
 				
-<h1 id="this-is-my-fourth-post">This is my fourth post</h1>
+<h1 class="text-2xl mb-8 font-bold" id="this-is-my-fourth-post">This is my fourth post</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2018-09-30">30 September 2018</time></li>
-	<li><a href="/tags/second-tag/" class="post-tag">second tag</a></li>
-</ul>
+<div>
+	<time datetime="2018-09-30">30 September 2018</time>
+</div>
 
-<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
+<div class="mb-8">
+	<ul class="post-metadata">
+		<li>
+			<div class="badge badge-dash badge-neutral">
+				<a href="/tags/second-tag/" class="post-tag">second tag</a>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<p class="mb-8">This is a post on My Blog about touchpoints and circling wagons.</p>
+
+<div class="mb-8">
+	<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
 <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
 <picture><source type="image/avif" srcset="/.11ty/image/?src=content%2Fblog%2Ffourthpost%2Fpossum.png&width=350&format=avif&via=transform 350w"><source type="image/webp" srcset="/.11ty/image/?src=content%2Fblog%2Ffourthpost%2Fpossum.png&width=350&format=webp&via=transform 350w"><img loading="lazy" decoding="async" src="/.11ty/image/?src=content%2Fblog%2Ffourthpost%2Fpossum.png&width=350&format=png&via=transform" alt="A possum parent and two possum kids hanging from the iconic red balloon" width="350" height="685"></picture>
 <h2 id="section-header">Section Header</h2>
 <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
 
+</div>
 
 
 
 			</heading-anchors>
 		</main>
 
-		<footer class="mt-auto" style="background-color: #7FFFD4;">
-			<div class="container mx-auto px-4 py-8">
-				<div class="grid grid-cols-2 gap-8">
-					<div>
-						<h3 class="font-bold mb-4" id="open-source">Open Source</h3>
-						<ul>
-							<li><a href="https://github.com/prestonp/specstack" class="hover:underline">GitHub</a></li>
-						</ul>
-					</div>
-					<div>
-						<h3 class="font-bold mb-4" id="author">Author</h3>
-						<ul>
-							<li><a href="mailto:preston.pham@fastmail.com" class="hover:underline">preston.pham@fastmail.com</a></li>
-							<li><a href="/blog" class="hover:underline">My Blog</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="text-center mt-6 text-sm">
-					<p><em>Built with <a href="https://www.11ty.dev/" class="hover:underline">Eleventy v3.0.0</a></em></p>
-				</div>
-			</div>
+		<footer class="footer sm:footer-horizontal bg-accent text-accent-content p-10">
+			<nav>
+				<h6 class="footer-title" id="open-source">Open Source</h6>
+				<a href="https://github.com/prestonp/specstack" class="link link-hover">GitHub</a>
+			</nav>
+			<nav>
+				<h6 class="footer-title" id="author">Author</h6>
+				<a href="mailto:preston.pham@fastmail.com" class="link link-hover">preston.pham@fastmail.com</a>
+				<a href="/blog" class="link link-hover">My Blog</a>
+			</nav>
+			<nav>
+				<a href="https://www.11ty.dev/" class="link link-hover">Made with Eleventy v3.0.0</a>
+			</nav>
 		</footer>
 
-		<!-- This page `/blog/fourthpost/` was built on 2025-04-03T00:15:14.881Z -->
+		<!-- This page `/blog/fourthpost/` was built on 2025-04-03T13:04:08.039Z -->
 		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>

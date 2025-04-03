@@ -5,8 +5,6 @@ description: "A practical introduction to TLA+ through a mutual exclusion algori
 tags: ["author:preston.p@fastmail.com", "language:tla+", "level_of_detail:low"]
 ---
 
-A practical introduction to TLA+ through a mutual exclusion algorithm specification
-
 
 ```tla
 ---- MODULE MutualExclusion ----

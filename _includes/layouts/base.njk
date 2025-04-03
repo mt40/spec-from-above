@@ -13,6 +13,7 @@
 		{# Daisy UI CSS components #}
 		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
 
 		{# A ligature font #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -127,20 +128,20 @@
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
 
-		<header>
-			<a href="/" class="home-link">{{ metadata.title }}</a>
-
-			{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-			<nav>
-				<h2 class="visually-hidden">Top level navigation menu</h2>
-				<ul class="nav">
-				{%- for entry in collections.all | eleventyNavigation %}
-					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
-				{%- endfor %}
+		{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+		<div class="navbar bg-base-100 shadow-sm">
+			<div class="flex-1">
+				<a href="/" class="home-link btn btn-ghost text-xl">{{ metadata.title }}</a>
+			</div>
+			<div class="flex-none">
+				<ul class="menu menu-horizontal px-1">
+					{%- for entry in collections.all | eleventyNavigation %}
+						<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
+					{%- endfor %}
 					<li class="nav-item"><a href="{{ metadata.contribute_url }}">Contribute</a></li>
 				</ul>
-			</nav>
-		</header>
+			</div>
+		</div>
 
 		<main id="skip">
 			<heading-anchors>
@@ -148,27 +149,19 @@
 			</heading-anchors>
 		</main>
 
-		<footer class="mt-auto" style="background-color: #7FFFD4;">
-			<div class="container mx-auto px-4 py-8">
-				<div class="grid grid-cols-2 gap-8">
-					<div>
-						<h3 class="font-bold mb-4">Open Source</h3>
-						<ul>
-							<li><a href="{{ metadata.github }}" class="hover:underline">GitHub</a></li>
-						</ul>
-					</div>
-					<div>
-						<h3 class="font-bold mb-4">Author</h3>
-						<ul>
-							<li><a href="mailto:{{ metadata.author.email }}" class="hover:underline">{{ metadata.author.email }}</a></li>
-							<li><a href="/blog" class="hover:underline">My Blog</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="text-center mt-6 text-sm">
-					<p><em>Built with <a href="https://www.11ty.dev/" class="hover:underline">{{ eleventy.generator }}</a></em></p>
-				</div>
-			</div>
+		<footer class="footer sm:footer-horizontal bg-accent text-accent-content p-10">
+			<nav>
+				<h6 class="footer-title">Open Source</h6>
+				<a href="{{ metadata.github }}" class="link link-hover">GitHub</a>
+			</nav>
+			<nav>
+				<h6 class="footer-title">Author</h6>
+				<a href="mailto:{{ metadata.author.email }}" class="link link-hover">{{ metadata.author.email }}</a>
+				<a href="/blog" class="link link-hover">My Blog</a>
+			</nav>
+			<nav>
+				<a href="https://www.11ty.dev/" class="link link-hover">Made with {{ eleventy.generator }}</a>
+			</nav>
 		</footer>
 
 		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->

@@ -4,13 +4,14 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Tagged &#39;number 2&#39;</title>
-		<meta name="description" content="A free library of software specifications ">
+		<meta name="description" content="A free library of software specifications">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="SpecStack">
 		<meta name="generator" content="Eleventy v3.0.0">
 
 		
 		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
 		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css">
 
 		
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +24,8 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 2rem;
-	padding: 1rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 /* Tablet and larger screens (768px and up) */
@@ -40,36 +42,9 @@
 	}
 }
 
-.post-card {
-	background: var(--background-color);
-	border: 1px solid var(--color-gray-20);
-	border-radius: 0.5rem;
-	padding: 1.5rem;
-	transition: transform 0.2s ease;
-}
-
 .post-card:hover {
 	transform: translateY(-3px);
 	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.post-card-title {
-	font-size: 1.25rem;
-	margin: 0 0 1rem 0;
-}
-
-.post-card-title a {
-	color: var(--text-color);
-	text-decoration: none;
-}
-
-.post-card-title a:hover {
-	color: var(--text-color-link);
-}
-
-.post-card-date {
-	color: var(--color-gray-50);
-	font-size: 0.875rem;
 }
 /* This is an arbitrary CSS string added to the bundle */
 /* Defaults */
@@ -397,20 +372,20 @@ header {
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
-
-		<header>
-			<a href="/" class="home-link">SpecStack</a>
-			<nav>
-				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
-				<ul class="nav">
-					<li class="nav-item"><a href="/">Home</a></li>
-					<li class="nav-item"><a href="/blog/">Archive</a></li>
-					<li class="nav-item"><a href="/about/">About</a></li>
-					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+		<div class="navbar bg-base-100 shadow-sm">
+			<div class="flex-1">
+				<a href="/" class="home-link btn btn-ghost text-xl">SpecStack</a>
+			</div>
+			<div class="flex-none">
+				<ul class="menu menu-horizontal px-1">
+						<li class="nav-item"><a href="/">Home</a></li>
+						<li class="nav-item"><a href="/blog/">Archive</a></li>
+						<li class="nav-item"><a href="/about/">About</a></li>
+						<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
 					<li class="nav-item"><a href="https://github.com/prestonp/specstack">Contribute</a></li>
 				</ul>
-			</nav>
-		</header>
+			</div>
+		</div>
 
 		<main id="skip">
 			<heading-anchors>
@@ -421,15 +396,19 @@ header {
 
 
 <div class="posts-grid">
-	<article class="post-card">
-		<h2 class="post-card-title" id="this-is-my-second-post-with-a-much-longer-title">
-			<a href="/blog/secondpost/">This is my second post with a much longer title.</a>
-		</h2>
-		<time class="post-card-date" datetime="2018-07-04">July 2018</time>
-	</article>
+		<div class="post-card card bg-base-100 shadow-sm">
+			<div class="card-body">
+				<h2 class="card-title" id="this-is-my-second-post-with-a-much-longer-title">
+					<a href="/blog/secondpost/">
+						This is my second post with a much longer title.
+						
+					</a>
+				</h2>
+				<time class="post-card-date" datetime="2018-07-04">July 2018</time>
+				<p></p>
+			</div>
+		</div>
 </div>
-
-
 
 <p>See <a href="/tags/">all tags</a>.</p>
 
@@ -437,30 +416,22 @@ header {
 			</heading-anchors>
 		</main>
 
-		<footer class="mt-auto" style="background-color: #7FFFD4;">
-			<div class="container mx-auto px-4 py-8">
-				<div class="grid grid-cols-2 gap-8">
-					<div>
-						<h3 class="font-bold mb-4" id="open-source">Open Source</h3>
-						<ul>
-							<li><a href="https://github.com/prestonp/specstack" class="hover:underline">GitHub</a></li>
-						</ul>
-					</div>
-					<div>
-						<h3 class="font-bold mb-4" id="author">Author</h3>
-						<ul>
-							<li><a href="mailto:preston.pham@fastmail.com" class="hover:underline">preston.pham@fastmail.com</a></li>
-							<li><a href="/blog" class="hover:underline">My Blog</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="text-center mt-6 text-sm">
-					<p><em>Built with <a href="https://www.11ty.dev/" class="hover:underline">Eleventy v3.0.0</a></em></p>
-				</div>
-			</div>
+		<footer class="footer sm:footer-horizontal bg-accent text-accent-content p-10">
+			<nav>
+				<h6 class="footer-title" id="open-source">Open Source</h6>
+				<a href="https://github.com/prestonp/specstack" class="link link-hover">GitHub</a>
+			</nav>
+			<nav>
+				<h6 class="footer-title" id="author">Author</h6>
+				<a href="mailto:preston.pham@fastmail.com" class="link link-hover">preston.pham@fastmail.com</a>
+				<a href="/blog" class="link link-hover">My Blog</a>
+			</nav>
+			<nav>
+				<a href="https://www.11ty.dev/" class="link link-hover">Made with Eleventy v3.0.0</a>
+			</nav>
 		</footer>
 
-		<!-- This page `/tags/number-2/` was built on 2025-04-03T00:15:14.900Z -->
+		<!-- This page `/tags/number-2/` was built on 2025-04-03T13:04:08.052Z -->
 		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>

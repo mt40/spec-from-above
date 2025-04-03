@@ -16,8 +16,7 @@
     <link href="https://prestonp.github.com/blog/tlaplus_sample/" />
     <updated>2025-04-02T08:48:45Z</updated>
     <id>https://prestonp.github.com/blog/tlaplus_sample/</id>
-    <content type="html">&lt;p&gt;A practical introduction to TLA+ through a mutual exclusion algorithm specification&lt;/p&gt;
-&lt;pre class=&quot;language-tla&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-tla&quot;&gt;---- MODULE MutualExclusion ----
+    <content type="html">&lt;pre class=&quot;language-tla&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-tla&quot;&gt;---- MODULE MutualExclusion ----
 EXTENDS Integers, TLC
 
 CONSTANTS N  &#92;* Number of processes
