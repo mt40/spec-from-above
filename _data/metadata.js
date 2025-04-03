@@ -1,14 +1,14 @@
 export default {
-	title: "Specs From Above",
-	url: "https://example.com/",
+	title: "SpecStack",
+	url: "https://prestonp.github.com/specstack",
 	language: "en",
-	description: "I am writing about my experiences as a naval navel-gazer.",
+	description: "A free library of software specifications",
 	author: {
 		name: "Preston Pham",
 		email: "preston.pham@fastmail.com",
 		linkedin: "https://www.linkedin.com/in/prestonp-swe",
 		blog: "https://mangotreeblog.substack.com"
 	},
-	github: "https://github.com/mt40/spec-from-above",
-	contribute_url: "https://github.com/mt40/spec-from-above"
+	github: "https://github.com/prestonp/specstack",
+	contribute_url: "https://github.com/prestonp/specstack"
 }
