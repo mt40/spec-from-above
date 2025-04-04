@@ -5,16 +5,346 @@
   <subtitle>A free library of software specifications</subtitle>
   <link href="https://prestonp.github.com/feed/feed.xml" rel="self" />
   <link href="https://prestonp.github.com/specstack" />
-  <updated>2025-04-03T13:05:57Z</updated>
+  <updated>2025-04-04T07:51:37Z</updated>
   <id>https://prestonp.github.com/specstack</id>
   <author>
     <name>Preston Pham</name>
     <email>preston.p@fastmail.com</email>
   </author>
   <entry>
+    <title>Real TLA+</title>
+    <link href="https://prestonp.github.com/specs/sample_tlaplus/" />
+    <updated>2025-04-04T07:51:37Z</updated>
+    <id>https://prestonp.github.com/specs/sample_tlaplus/</id>
+    <content type="html">&lt;pre&gt;&lt;code&gt;---- MODULE MutualExclusion ----
+EXTENDS Integers, TLC
+
+CONSTANTS N  &#92;* Number of processes
+
+VARIABLES pc,    &#92;* Program counter for each process
+         flag,   &#92;* Flag array for each process
+         turn    &#92;* Whose turn it is
+
+&#92;* TypeOK ensures all variables have valid values and types
+TypeOK == /&#92; pc &#92;in [1..N -&gt; {&quot;non-critical&quot;, &quot;trying&quot;, &quot;critical&quot;}]
+          /&#92; flag &#92;in [1..N -&gt; {TRUE, FALSE}]
+          /&#92; turn &#92;in 1..N
+
+&#92;* Initial state: all processes start outside critical section
+Init == /&#92; pc = [i &#92;in 1..N |-&gt; &quot;non-critical&quot;]
+        /&#92; flag = [i &#92;in 1..N |-&gt; FALSE]
+        /&#92; turn = 1
+
+&#92;* Process i enters critical section if:
+&#92;* 1. It&#39;s in &quot;trying&quot; state
+&#92;* 2. Its flag is set to TRUE
+&#92;* 3. Either it&#39;s its turn OR no other process has its flag set
+Enter(i) == /&#92; pc[i] = &quot;trying&quot;
+            /&#92; flag[i] = TRUE
+            /&#92; &#92;/ turn = i
+               &#92;/ &#92;A j &#92;in 1..N: ~flag[j]
+            /&#92; pc&#39; = [pc EXCEPT ![i] = &quot;critical&quot;]
+            /&#92; UNCHANGED &lt;&lt;flag, turn=&quot;&quot;&gt;&gt;
+
+&#92;* Process i exits critical section and:
+&#92;* 1. Returns to non-critical state
+&#92;* 2. Clears its flag
+&#92;* 3. Passes turn to next process (wraps around to 1 if at N)
+Exit(i) == /&#92; pc[i] = &quot;critical&quot;
+           /&#92; pc&#39; = [pc EXCEPT ![i] = &quot;non-critical&quot;]
+           /&#92; flag&#39; = [flag EXCEPT ![i] = FALSE]
+           /&#92; turn&#39; = (turn % N) + 1
+           /&#92; UNCHANGED &lt;&lt;&gt;&gt;
+
+&#92;* Process i indicates it wants to enter critical section
+Try(i) == /&#92; pc[i] = &quot;non-critical&quot;
+          /&#92; pc&#39; = [pc EXCEPT ![i] = &quot;trying&quot;]
+          /&#92; UNCHANGED &lt;&lt;flag, turn=&quot;&quot;&gt;&gt;
+
+&#92;* Next state is any process performing any of its actions
+Next == &#92;E i &#92;in 1..N: &#92;/ Enter(i)
+                            &#92;/ Exit(i)
+                            &#92;/ Try(i)
+
+&#92;* Complete specification: initial state and all possible transitions
+Spec == Init /&#92; [][Next]_&lt;&lt;pc, flag,=&quot;&quot; turn=&quot;&quot;&gt;&gt;
+
+&#92;* Safety property: no two processes can be in critical section at same time
+MutualExclusion == &#92;A i, j &#92;in 1..N: 
+                     (i # j) =&gt; ~(pc[i] = &quot;critical&quot; /&#92; pc[j] = &quot;critical&quot;)
+
+Liveness == &lt;&gt; MutualExclusion
+
+&#92;* Testing ligature: =~ =&lt; |= !~ /&#92; &#92;/ &lt;&gt;
+
+&lt;/pc,&gt;&lt;/flag,&gt;&lt;/flag,&gt;&lt;/code&gt;&lt;/pre&gt;</content>
+  </entry>
+  <entry>
+    <title>Real Quint</title>
+    <link href="https://prestonp.github.com/specs/sample_quint/" />
+    <updated>2025-04-04T07:51:37Z</updated>
+    <id>https://prestonp.github.com/specs/sample_quint/</id>
+    <content type="html">&lt;pre&gt;&lt;code&gt;// -*- mode: Bluespec; -*-
+
+ /** 
+  * Quint specification for a two-layered cache system. The system consists of
+  * two cache layers (L1 and L2) that store integer values. Clients can read and
+  * write values to the cache. The specification verifies key properties like
+  * read-after-write consistency and write-after-write consistency across the
+  * cache layers.
+  * 
+  * Check with:
+  *   quint verify &#92;
+  *     two_layered_cache.qnt &#92;
+  *     --invariant=readAfterWrite,writeAfterWrite &#92;
+  *     --temporal=agreement &#92;
+  *
+  * Or with TLC using the `check_with_tlc.sh` script from this repo:
+  *   sh check_with_tlc.sh &#92;
+  *     --file ~/projects/quint/examples/classic/distributed/TwoLayeredCache/two_layered_cache.qnt &#92;
+  *     --invariant readAfterWrite,writeAfterWrite &#92;
+  *     --temporal agreement
+  *
+  * Preston Pham (@mt40), 2025
+  */ 
+
+module two_layered_cache {
+    //**********************************************************
+    // TYPE DEFINITIONS
+    //**********************************************************
+
+    type CacheLayer = str -&gt; int
+    type ClientPID = int
+
+    type HistoryEntry = Read(int) | Write(int)
+
+    //**********************************************************
+    // CONSTANTS
+    //**********************************************************
+
+    // We only consider 1 key in this spec but it is easy to
+    // extend to multiple keys if needed
+    pure val DefaultKey = &quot;default&quot;
+    pure val DefaultExpireDuration = 3
+    pure val ClientProcesses: Set[ClientPID] = 1.to(10)
+    pure val MaxVal = 1000000
+    pure val Expired = -99
+    pure val NotFound = -98
+
+    //**********************************************************
+    // STATE MACHINE
+    // State-dependent definitions and actions
+    //**********************************************************
+
+    var l1: CacheLayer
+    var l2: CacheLayer
+    var num: int
+
+    // Global log of system events. Use to specify correctness
+    // properties below.
+    var history: List[HistoryEntry]
+
+    //**********************************************************
+    // FUNCTIONAL LAYER
+    // Values and functions that are state-independent
+    //**********************************************************
+
+    pure def isWrite(entry: HistoryEntry): bool = {
+        match entry {
+            | Write(_) =&gt; true
+            | _ =&gt; false
+        }
+    }
+
+    pure def isRead(entry: HistoryEntry): bool = {
+        match entry {
+            | Read(_) =&gt; true
+            | _ =&gt; false
+        }
+    }
+
+    pure def value(entry: HistoryEntry): int = {
+        match entry {
+            | Read(v) =&gt; v
+            | Write(v) =&gt; v
+        }
+    }
+
+    pure def isNotEmpty(l: CacheLayer): bool = {
+        l.keys().size() &gt; 0
+    }
+
+    //**********************************************************
+    // HELPERS
+    // Operators for convenience
+    //**********************************************************
+
+    action writeL1(v: int): bool = all {
+        l1&#39; = l1.put(DefaultKey, v)
+    }
+
+    action writeL2(v: int): bool = all {
+        l2&#39; = l2.put(DefaultKey, v)
+    }
+
+    //**********************************************************
+    // ACTIONS
+    //**********************************************************
+
+    action writeCache(pid: ClientPID, v: int): bool = all {
+        writeL1(v),
+        writeL2(v),
+        history&#39; = history.append(Write(v))
+    }
+
+    action handleNotFound(): bool = all {
+        l1&#39; = l1,
+        l2&#39; = l2,
+        history&#39; = history.append(Read(NotFound))
+    }
+
+    action handleL1Found(): bool = {
+        val value = l1.get(DefaultKey)
+        all {
+            l1&#39; = l1,
+            l2&#39; = l2,
+            history&#39; = history.append(Read(value))
+        }
+    }
+
+    action handleL2Found(): bool = {
+        val value = l2.get(DefaultKey)
+        all {
+            writeL1(value),
+            l2&#39; = l2,
+            history&#39; = history.append(Read(value))
+        }
+    }
+
+    action handleFound(): bool = {
+        if (isNotEmpty(l1)) {
+            handleL1Found
+        } else {
+            handleL2Found
+        }
+    }
+
+    // If val doesn&#39;t exist in L1, read from L2.
+    // If val exists in L2, write back to L1 then return.
+    // Otherwise, not found (false).
+    action readCache(pid: ClientPID): bool = {
+        if (isNotEmpty(l1) or isNotEmpty(l2)) {
+            handleFound
+        } else {
+            handleNotFound
+        }
+    }
+
+    action clientProc = all {
+        nondet pid = ClientProcesses.oneOf()
+        
+        any {
+            all {
+                num&#39; = num + 1,
+                writeCache(pid, num)
+            },
+            all {
+                num&#39; = num,
+                readCache(pid),
+            }
+        },
+    }
+
+    // Clear layer 1 data to simulate its
+    // volatility. Because in practice, layer 1
+    // usually uses memory for storage.
+    action l1Expire = all {
+        any {
+            l1&#39; = l1,
+            l1&#39; = Map()
+        },
+        l2&#39; = l2,
+        num&#39; = num,
+        history&#39; = history
+    }
+
+    action stutter = all {
+        num&#39; = num,
+        l1&#39; = l1,
+        l2&#39; = l2,
+        history&#39; = history,
+    }
+
+    action init = all {
+        num&#39; = 0,
+        l1&#39; = Map(),
+        l2&#39; = Map(),
+        history&#39; = [],
+    }
+
+    action step = all {
+      // Limit the state space to enable exploration with TLC
+      history.length() &lt; 15,
+      any {
+          clientProc,
+          stutter,
+          l1Expire
+      }
+    }
+
+    //**********************************************************
+    // CORRECTNESS
+    // 1. Safety Properties / Invariants
+    //**********************************************************
+
+    // Read the latest write
+    val readAfterWrite: bool = {
+        val idx = history.indices()
+        idx.forall(i =&gt; {
+            idx.forall(j =&gt; {
+                i &lt; j
+                and history[i].isWrite()
+                and history[j].isRead()
+                implies history[i].value() &lt;= history[j].value()
+            })
+        })
+    }
+
+    // Later write must contain a greater value
+    val writeAfterWrite: bool = {
+        val idx = history.indices()
+        idx.forall(i =&gt; {
+            idx.forall(j =&gt; {
+                i &lt; j
+                and history[i].isWrite()
+                and history[j].isWrite()
+                implies history[i].value() &lt; history[j].value()
+            })
+        })
+    }
+
+    //**********************************************************
+    // CORRECTNESS
+    // 2. Liveness Properties / Temporal
+    //**********************************************************
+
+    // All layers contain the same latest written value
+    temporal agreement: bool = eventually({
+        val a = l1.get(DefaultKey)
+        val b = l2.get(DefaultKey)
+        a == b
+    })
+
+    //**********************************************************
+    // QUICK TESTS
+    //**********************************************************
+    // run initAndStepTest = init.then(step)
+}&lt;/code&gt;&lt;/pre&gt;</content>
+  </entry>
+  <entry>
     <title>Understanding TLA+ with a Mutual Exclusion Example</title>
     <link href="https://prestonp.github.com/blog/tlaplus_sample/" />
-    <updated>2025-04-03T13:05:57Z</updated>
+    <updated>2025-04-03T13:58:16Z</updated>
     <id>https://prestonp.github.com/blog/tlaplus_sample/</id>
     <content type="html">&lt;pre class=&quot;language-tla&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-tla&quot;&gt;---- MODULE MutualExclusion ----
 EXTENDS Integers, TLC

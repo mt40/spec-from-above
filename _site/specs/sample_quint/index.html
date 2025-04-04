@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>This is my second post with a much longer title.</title>
-		<meta name="description" content="This is a post on My Blog about leveraging agile frameworks.">
+		<title>Real Quint</title>
+		<meta name="description" content="A basic Quint specification demonstrating a simple counter">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="SpecStack">
 		<meta name="generator" content="Eleventy v3.0.0">
 
@@ -341,31 +341,290 @@ header {
 			<heading-anchors>
 				
 <div>
-	<time datetime="2018-07-04">04 July 2018</time>
+	<time datetime="2025-04-04">04 April 2025</time>
 </div>
 
-<h1 class="text-2xl mb-8 font-bold" id="this-is-my-second-post-with-a-much-longer-title">This is my second post with a much longer title.</h1>
+<h1 class="text-2xl mb-8 font-bold" id="real-quint">Real Quint</h1>
 
 <div class="mb-8">
 	<ul class="post-metadata">
 		<li>
 			<div class="badge">
-				<a href="/tags/number-2/" class="post-tag text-neutral">number 2</a>
+				<a href="/tags/author-preston-p-fastmail-com/" class="post-tag text-neutral">author -- preston.p@fastmail.com</a>
+			</div>
+		</li>
+		<li>
+			<div class="badge">
+				<a href="/tags/language-quint/" class="post-tag text-neutral">language -- Quint</a>
+			</div>
+		</li>
+		<li>
+			<div class="badge">
+				<a href="/tags/level-of-detail-low/" class="post-tag text-neutral">level of detail -- low</a>
 			</div>
 		</li>
 	</ul>
 </div>
 
-<p class="mb-8">This is a post on My Blog about leveraging agile frameworks.</p>
+<p class="mb-8">A basic Quint specification demonstrating a simple counter</p>
 
 <div class="mb-8">
-	<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-<h2 id="section-header">Section Header</h2>
-<p><a href="/blog/firstpost/">First post</a>
-<a href="/blog/thirdpost/">Third post</a></p>
-<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
+	<pre><code>// -*- mode: Bluespec; -*-
 
+ /** 
+  * Quint specification for a two-layered cache system. The system consists of
+  * two cache layers (L1 and L2) that store integer values. Clients can read and
+  * write values to the cache. The specification verifies key properties like
+  * read-after-write consistency and write-after-write consistency across the
+  * cache layers.
+  * 
+  * Check with:
+  *   quint verify \
+  *     two_layered_cache.qnt \
+  *     --invariant=readAfterWrite,writeAfterWrite \
+  *     --temporal=agreement \
+  *
+  * Or with TLC using the `check_with_tlc.sh` script from this repo:
+  *   sh check_with_tlc.sh \
+  *     --file ~/projects/quint/examples/classic/distributed/TwoLayeredCache/two_layered_cache.qnt \
+  *     --invariant readAfterWrite,writeAfterWrite \
+  *     --temporal agreement
+  *
+  * Preston Pham (@mt40), 2025
+  */ 
+
+module two_layered_cache {
+    //**********************************************************
+    // TYPE DEFINITIONS
+    //**********************************************************
+
+    type CacheLayer = str -> int
+    type ClientPID = int
+
+    type HistoryEntry = Read(int) | Write(int)
+
+    //**********************************************************
+    // CONSTANTS
+    //**********************************************************
+
+    // We only consider 1 key in this spec but it is easy to
+    // extend to multiple keys if needed
+    pure val DefaultKey = "default"
+    pure val DefaultExpireDuration = 3
+    pure val ClientProcesses: Set[ClientPID] = 1.to(10)
+    pure val MaxVal = 1000000
+    pure val Expired = -99
+    pure val NotFound = -98
+
+    //**********************************************************
+    // STATE MACHINE
+    // State-dependent definitions and actions
+    //**********************************************************
+
+    var l1: CacheLayer
+    var l2: CacheLayer
+    var num: int
+
+    // Global log of system events. Use to specify correctness
+    // properties below.
+    var history: List[HistoryEntry]
+
+    //**********************************************************
+    // FUNCTIONAL LAYER
+    // Values and functions that are state-independent
+    //**********************************************************
+
+    pure def isWrite(entry: HistoryEntry): bool = {
+        match entry {
+            | Write(_) => true
+            | _ => false
+        }
+    }
+
+    pure def isRead(entry: HistoryEntry): bool = {
+        match entry {
+            | Read(_) => true
+            | _ => false
+        }
+    }
+
+    pure def value(entry: HistoryEntry): int = {
+        match entry {
+            | Read(v) => v
+            | Write(v) => v
+        }
+    }
+
+    pure def isNotEmpty(l: CacheLayer): bool = {
+        l.keys().size() > 0
+    }
+
+    //**********************************************************
+    // HELPERS
+    // Operators for convenience
+    //**********************************************************
+
+    action writeL1(v: int): bool = all {
+        l1' = l1.put(DefaultKey, v)
+    }
+
+    action writeL2(v: int): bool = all {
+        l2' = l2.put(DefaultKey, v)
+    }
+
+    //**********************************************************
+    // ACTIONS
+    //**********************************************************
+
+    action writeCache(pid: ClientPID, v: int): bool = all {
+        writeL1(v),
+        writeL2(v),
+        history' = history.append(Write(v))
+    }
+
+    action handleNotFound(): bool = all {
+        l1' = l1,
+        l2' = l2,
+        history' = history.append(Read(NotFound))
+    }
+
+    action handleL1Found(): bool = {
+        val value = l1.get(DefaultKey)
+        all {
+            l1' = l1,
+            l2' = l2,
+            history' = history.append(Read(value))
+        }
+    }
+
+    action handleL2Found(): bool = {
+        val value = l2.get(DefaultKey)
+        all {
+            writeL1(value),
+            l2' = l2,
+            history' = history.append(Read(value))
+        }
+    }
+
+    action handleFound(): bool = {
+        if (isNotEmpty(l1)) {
+            handleL1Found
+        } else {
+            handleL2Found
+        }
+    }
+
+    // If val doesn't exist in L1, read from L2.
+    // If val exists in L2, write back to L1 then return.
+    // Otherwise, not found (false).
+    action readCache(pid: ClientPID): bool = {
+        if (isNotEmpty(l1) or isNotEmpty(l2)) {
+            handleFound
+        } else {
+            handleNotFound
+        }
+    }
+
+    action clientProc = all {
+        nondet pid = ClientProcesses.oneOf()
+        
+        any {
+            all {
+                num' = num + 1,
+                writeCache(pid, num)
+            },
+            all {
+                num' = num,
+                readCache(pid),
+            }
+        },
+    }
+
+    // Clear layer 1 data to simulate its
+    // volatility. Because in practice, layer 1
+    // usually uses memory for storage.
+    action l1Expire = all {
+        any {
+            l1' = l1,
+            l1' = Map()
+        },
+        l2' = l2,
+        num' = num,
+        history' = history
+    }
+
+    action stutter = all {
+        num' = num,
+        l1' = l1,
+        l2' = l2,
+        history' = history,
+    }
+
+    action init = all {
+        num' = 0,
+        l1' = Map(),
+        l2' = Map(),
+        history' = [],
+    }
+
+    action step = all {
+      // Limit the state space to enable exploration with TLC
+      history.length() < 15,
+      any {
+          clientProc,
+          stutter,
+          l1Expire
+      }
+    }
+
+    //**********************************************************
+    // CORRECTNESS
+    // 1. Safety Properties / Invariants
+    //**********************************************************
+
+    // Read the latest write
+    val readAfterWrite: bool = {
+        val idx = history.indices()
+        idx.forall(i => {
+            idx.forall(j => {
+                i < j
+                and history[i].isWrite()
+                and history[j].isRead()
+                implies history[i].value() <= history[j].value()
+            })
+        })
+    }
+
+    // Later write must contain a greater value
+    val writeAfterWrite: bool = {
+        val idx = history.indices()
+        idx.forall(i => {
+            idx.forall(j => {
+                i < j
+                and history[i].isWrite()
+                and history[j].isWrite()
+                implies history[i].value() < history[j].value()
+            })
+        })
+    }
+
+    //**********************************************************
+    // CORRECTNESS
+    // 2. Liveness Properties / Temporal
+    //**********************************************************
+
+    // All layers contain the same latest written value
+    temporal agreement: bool = eventually({
+        val a = l1.get(DefaultKey)
+        val b = l2.get(DefaultKey)
+        a == b
+    })
+
+    //**********************************************************
+    // QUICK TESTS
+    //**********************************************************
+    // run initAndStepTest = init.then(step)
+}</code></pre>
 </div>
 
 
@@ -388,7 +647,7 @@ header {
 			</nav>
 		</footer>
 
-		<!-- This page `/blog/secondpost/` was built on 2025-04-04T07:51:37.629Z -->
+		<!-- This page `/specs/sample_quint/` was built on 2025-04-04T07:51:37.629Z -->
 		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>

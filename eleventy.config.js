@@ -107,6 +107,33 @@ export default async function(eleventyConfig) {
 		return (new Date()).toISOString();
 	});
 
+	// Support TLA+ files as a custom template
+	// See: https://www.11ty.dev/docs/languages/custom/
+	eleventyConfig.addTemplateFormats("tla");
+	eleventyConfig.addExtension("tla", {
+		outputFileExtension: "html",
+		compile: async (inputContent) => {
+			const output = `<pre><code>${inputContent}</code></pre>`;
+
+			return async () => {
+				return output;
+			};
+		},
+	});
+
+	// Support Quint files as a custom template
+	eleventyConfig.addTemplateFormats("qnt");
+	eleventyConfig.addExtension("qnt", {
+		outputFileExtension: "html",
+		compile: async (inputContent) => {
+			const output = `<pre><code>${inputContent}</code></pre>`;
+
+			return async () => {
+				return output;
+			};
+		},
+	});
+
 	// Features to make your build faster (when you need them)
 
 	// If your passthrough copy gets heavy and cumbersome, add this line

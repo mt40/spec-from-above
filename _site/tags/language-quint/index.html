@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>This is my second post with a much longer title.</title>
-		<meta name="description" content="This is a post on My Blog about leveraging agile frameworks.">
+		<title>Tagged &#39;language -- Quint&#39;</title>
+		<meta name="description" content="A free library of software specifications">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="SpecStack">
 		<meta name="generator" content="Eleventy v3.0.0">
 
@@ -20,7 +20,33 @@
 		
 
 		
-		<style>/* This is an arbitrary CSS string added to the bundle */
+		<style>.posts-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+/* Tablet and larger screens (768px and up) */
+@media (min-width: 768px) {
+	.posts-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+/* Desktop and larger screens (1024px and up) */
+@media (min-width: 1024px) {
+	.posts-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.post-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+/* This is an arbitrary CSS string added to the bundle */
 /* Defaults */
 :root {
 	--font-family: -apple-system, system-ui, sans-serif;
@@ -340,34 +366,27 @@ header {
 		<main id="skip">
 			<heading-anchors>
 				
-<div>
-	<time datetime="2018-07-04">04 July 2018</time>
-</div>
+<h1 id="tagged-language-quint">Tagged “language -- Quint”</h1>
 
-<h1 class="text-2xl mb-8 font-bold" id="this-is-my-second-post-with-a-much-longer-title">This is my second post with a much longer title.</h1>
 
-<div class="mb-8">
-	<ul class="post-metadata">
-		<li>
-			<div class="badge">
-				<a href="/tags/number-2/" class="post-tag text-neutral">number 2</a>
+
+
+<div class="posts-grid">
+		<div class="post-card card border-neutral card-border">
+			<div class="card-body">
+				<h2 class="card-title" id="real-quint">
+					<a href="/specs/sample_quint/">
+						Real Quint
+						
+					</a>
+				</h2>
+				<time class="post-card-date" datetime="2025-04-04">April 2025</time>
+				<p></p>
 			</div>
-		</li>
-	</ul>
+		</div>
 </div>
 
-<p class="mb-8">This is a post on My Blog about leveraging agile frameworks.</p>
-
-<div class="mb-8">
-	<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-<h2 id="section-header">Section Header</h2>
-<p><a href="/blog/firstpost/">First post</a>
-<a href="/blog/thirdpost/">Third post</a></p>
-<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
-
-</div>
-
+<p>See <a href="/tags/">all tags</a>.</p>
 
 
 			</heading-anchors>
@@ -388,7 +407,7 @@ header {
 			</nav>
 		</footer>
 
-		<!-- This page `/blog/secondpost/` was built on 2025-04-04T07:51:37.629Z -->
+		<!-- This page `/tags/language-quint/` was built on 2025-04-04T07:51:37.646Z -->
 		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>

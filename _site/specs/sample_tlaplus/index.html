@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>This is my second post with a much longer title.</title>
-		<meta name="description" content="This is a post on My Blog about leveraging agile frameworks.">
+		<title>Real TLA+</title>
+		<meta name="description" content="A basic TLA+ specification demonstrating a simple counter">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="SpecStack">
 		<meta name="generator" content="Eleventy v3.0.0">
 
@@ -341,31 +341,96 @@ header {
 			<heading-anchors>
 				
 <div>
-	<time datetime="2018-07-04">04 July 2018</time>
+	<time datetime="2025-04-04">04 April 2025</time>
 </div>
 
-<h1 class="text-2xl mb-8 font-bold" id="this-is-my-second-post-with-a-much-longer-title">This is my second post with a much longer title.</h1>
+<h1 class="text-2xl mb-8 font-bold" id="real-tla">Real TLA+</h1>
 
 <div class="mb-8">
 	<ul class="post-metadata">
 		<li>
 			<div class="badge">
-				<a href="/tags/number-2/" class="post-tag text-neutral">number 2</a>
+				<a href="/tags/author-preston-p-fastmail-com/" class="post-tag text-neutral">author -- preston.p@fastmail.com</a>
+			</div>
+		</li>
+		<li>
+			<div class="badge">
+				<a href="/tags/language-tla/" class="post-tag text-neutral">language -- TLA+</a>
+			</div>
+		</li>
+		<li>
+			<div class="badge">
+				<a href="/tags/level-of-detail-low/" class="post-tag text-neutral">level of detail -- low</a>
 			</div>
 		</li>
 	</ul>
 </div>
 
-<p class="mb-8">This is a post on My Blog about leveraging agile frameworks.</p>
+<p class="mb-8">A basic TLA+ specification demonstrating a simple counter</p>
 
 <div class="mb-8">
-	<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-<h2 id="section-header">Section Header</h2>
-<p><a href="/blog/firstpost/">First post</a>
-<a href="/blog/thirdpost/">Third post</a></p>
-<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
+	<pre><code>---- MODULE MutualExclusion ----
+EXTENDS Integers, TLC
 
+CONSTANTS N  \* Number of processes
+
+VARIABLES pc,    \* Program counter for each process
+         flag,   \* Flag array for each process
+         turn    \* Whose turn it is
+
+\* TypeOK ensures all variables have valid values and types
+TypeOK == /\ pc \in [1..N -> {"non-critical", "trying", "critical"}]
+          /\ flag \in [1..N -> {TRUE, FALSE}]
+          /\ turn \in 1..N
+
+\* Initial state: all processes start outside critical section
+Init == /\ pc = [i \in 1..N |-> "non-critical"]
+        /\ flag = [i \in 1..N |-> FALSE]
+        /\ turn = 1
+
+\* Process i enters critical section if:
+\* 1. It's in "trying" state
+\* 2. Its flag is set to TRUE
+\* 3. Either it's its turn OR no other process has its flag set
+Enter(i) == /\ pc[i] = "trying"
+            /\ flag[i] = TRUE
+            /\ \/ turn = i
+               \/ \A j \in 1..N: ~flag[j]
+            /\ pc' = [pc EXCEPT ![i] = "critical"]
+            /\ UNCHANGED <<flag, turn="">>
+
+\* Process i exits critical section and:
+\* 1. Returns to non-critical state
+\* 2. Clears its flag
+\* 3. Passes turn to next process (wraps around to 1 if at N)
+Exit(i) == /\ pc[i] = "critical"
+           /\ pc' = [pc EXCEPT ![i] = "non-critical"]
+           /\ flag' = [flag EXCEPT ![i] = FALSE]
+           /\ turn' = (turn % N) + 1
+           /\ UNCHANGED <<>>
+
+\* Process i indicates it wants to enter critical section
+Try(i) == /\ pc[i] = "non-critical"
+          /\ pc' = [pc EXCEPT ![i] = "trying"]
+          /\ UNCHANGED <<flag, turn="">>
+
+\* Next state is any process performing any of its actions
+Next == \E i \in 1..N: \/ Enter(i)
+                            \/ Exit(i)
+                            \/ Try(i)
+
+\* Complete specification: initial state and all possible transitions
+Spec == Init /\ [][Next]_<<pc, flag,="" turn="">>
+
+\* Safety property: no two processes can be in critical section at same time
+MutualExclusion == \A i, j \in 1..N: 
+                     (i # j) => ~(pc[i] = "critical" /\ pc[j] = "critical")
+
+Liveness == <> MutualExclusion
+
+\* Testing ligature: =~ =< |= !~ /\ \/ <>
+
+</pc,></flag,></flag,></code></pre>
 </div>
 
 
@@ -388,7 +453,7 @@ header {
 			</nav>
 		</footer>
 
-		<!-- This page `/blog/secondpost/` was built on 2025-04-04T07:51:37.629Z -->
+		<!-- This page `/specs/sample_tlaplus/` was built on 2025-04-04T07:51:37.629Z -->
 		<script type="module" src="/dist/vAf_QIlOuw.js"></script>
 	</body>
 </html>

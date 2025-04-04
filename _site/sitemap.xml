@@ -53,6 +53,16 @@
 	
 	<url>
 		<loc>https://prestonp.github.com/feed/feed.xml</loc>
-		<lastmod>2025-04-03</lastmod>
+		<lastmod>2025-04-04</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://prestonp.github.com/specs/sample_quint/</loc>
+		<lastmod>2025-04-04</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://prestonp.github.com/specs/sample_tlaplus/</loc>
+		<lastmod>2025-04-04</lastmod>
 	</url>
 </urlset>
