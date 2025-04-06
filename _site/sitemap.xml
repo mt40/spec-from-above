@@ -2,31 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
-		<loc>https://prestonph.github.com/blog/firstpost/</loc>
-		<lastmod>2018-05-01</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://prestonph.github.com/blog/secondpost/</loc>
-		<lastmod>2018-07-04</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://prestonph.github.com/blog/thirdpost/</loc>
-		<lastmod>2018-08-24</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://prestonph.github.com/blog/fourthpost/</loc>
-		<lastmod>2018-09-30</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://prestonph.github.com/blog/fifthpost/</loc>
-		<lastmod>2023-01-23</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://prestonph.github.com/about/</loc>
 		<lastmod>2025-04-02</lastmod>
 	</url>
@@ -47,18 +22,38 @@
 	</url>
 	
 	<url>
-		<loc>https://prestonph.github.com/blog/tlaplus_sample/</loc>
-		<lastmod>2025-04-03</lastmod>
+		<loc>https://prestonph.github.com/specs/pluscal/dekker/</loc>
+		<lastmod>2025-04-06</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://prestonph.github.com/specs/sample_quint/</loc>
-		<lastmod>2025-04-04</lastmod>
+		<loc>https://prestonph.github.com/specs/pluscal/leftpad/</loc>
+		<lastmod>2025-04-06</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://prestonph.github.com/specs/sample_tlaplus/</loc>
-		<lastmod>2025-04-04</lastmod>
+		<loc>https://prestonph.github.com/specs/pluscal/database_update_flow/</loc>
+		<lastmod>2025-04-06</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://prestonph.github.com/specs/pluscal/message_queue/</loc>
+		<lastmod>2025-04-06</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://prestonph.github.com/specs/tlaplus/fischer/</loc>
+		<lastmod>2025-04-06</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://prestonph.github.com/specs/tlaplus/test_and_set/</loc>
+		<lastmod>2025-04-06</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://prestonph.github.com/specs/quint/two_layered_cache/</loc>
+		<lastmod>2025-04-06</lastmod>
 	</url>
 	
 	<url>
