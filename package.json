@@ -1,7 +1,7 @@
 {
-	"name": "eleventy-base-blog",
+	"name": "spec-stack",
 	"version": "9.0.0",
-	"description": "A starter repository for a blog web site using the Eleventy site generator.",
+	"description": "A free library of software specifications",
 	"type": "module",
 	"scripts": {
 		"build": "npx @11ty/eleventy",
@@ -14,26 +14,18 @@
 		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
 	},
 	"repository": {
-		"type": "git",
-		"url": "git://github.com/11ty/eleventy-base-blog.git"
+		"type": "https",
+		"url": "https://github.com/prestonph/specstack"
 	},
 	"author": {
-		"name": "Zach Leatherman",
-		"email": "zachleatherman@gmail.com",
-		"url": "https://zachleat.com/"
+		"name": "Preston Pham",
+		"email": "preston.p@fastmail.com",
+		"url": "https://mangotreeblog.substack.com"
 	},
 	"license": "MIT",
 	"engines": {
 		"node": ">=18"
 	},
-	"funding": {
-		"type": "opencollective",
-		"url": "https://opencollective.com/11ty"
-	},
-	"bugs": {
-		"url": "https://github.com/11ty/eleventy-base-blog/issues"
-	},
-	"homepage": "https://github.com/11ty/eleventy-base-blog#readme",
 	"devDependencies": {
 		"@11ty/eleventy": "^3.0.0",
 		"@11ty/eleventy-img": "^6.0.1",

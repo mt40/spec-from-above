@@ -86,46 +86,6 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/solarized-light.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 		{%- js %}{% include "public/js/highlight.js" %}{% endjs %}
-		{# <script>
-			function tlaHljs(hljs) {
-				const n = {
-				keyword: [
-					'ACTION', 'ASSUME', 'ASSUMPTION', 'AXIOM', 'BY', 'CASE', 'CONSTANT',
-					'CONSTANTS', 'DEF', 'DEFINE', 'DEFS', 'DOMAIN', 'ELSE', 'ENABLED',
-					'EXCEPT', 'EXTENDS', 'HAVE', 'HIDE', 'IF', 'IN', 'INSTANCE', 'LAMBDA',
-					'LEMMA', 'LET', 'LOCAL', 'MODULE', 'NEW', 'OBVIOUS', 'OMITTED', 'OTHER',
-					'PICK', 'PROOF', 'PROPOSITION', 'PROOF', 'PROPOSITION', 'PROVE', 'QED',
-					'RECURSIVE', 'STATE', 'SUBSET', 'SUFFICES', 'TAKE', 'TEMPORAL',
-					'THEN', 'THEOREM', 'UNCHANGED', 'UNION', 'USE', 'VARIABLE', 'VARIABLES',
-					'WITH', 'WITNESS'
-				],
-				literal: [
-					'FALSE', 'TRUE', 'BOOLEAN', 'STRING', 'Int', 'Nat', 'Real', 'Seq',
-				],
-				punctuation: [ ',', '(', ')', '{', '}', '[', ']', ']_', '>>_' ],
-				};
-
-				return {
-				name: 'TLA+',
-				case_insensitive: false,
-				keywords: n,
-				contains: [
-					hljs.QUOTE_STRING_MODE,
-					hljs.C_NUMBER_MODE,
-					hljs.COMMENT('\\\\\\*', '$'),
-					hljs.COMMENT('\\(\\*', '\\*\\)'),
-					{
-					className: 'symbol',
-					begin: /\\[A-Za-z]+|\\|\/|WF_|SF_|'|\|->|\[\]|\(\+\)|\(-\)|\(\\X\)|\(\/\)|\(\.\)|&|\||@@|##|\$|\?|\!|~|~>|<=>|=>|>=|<=|>>|<<|<:|>|<|:=|==|=|\/=|#=|\.|\*|\+|-|\/|%|::=|:|:>|\^\^|\^\+|\^\*|\^\#|\^/,
-					},
-				],
-				};
-			}
-			hljs.registerLanguage('tlaplus', tlaHljs);
-			hljs.registerLanguage('tla', tlaHljs);
-			
-			hljs.highlightAll();
-		</script> #}
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>

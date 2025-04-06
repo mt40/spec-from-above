@@ -5,7 +5,7 @@
   <subtitle>A free library of software specifications</subtitle>
   <link href="https://prestonp.github.com/feed/feed.xml" rel="self" />
   <link href="https://prestonp.github.com/specstack" />
-  <updated>2025-04-04T07:51:37Z</updated>
+  <updated>2025-04-04T07:52:20Z</updated>
   <id>https://prestonp.github.com/specstack</id>
   <author>
     <name>Preston Pham</name>
@@ -14,7 +14,7 @@
   <entry>
     <title>Real TLA+</title>
     <link href="https://prestonp.github.com/specs/sample_tlaplus/" />
-    <updated>2025-04-04T07:51:37Z</updated>
+    <updated>2025-04-04T07:52:20Z</updated>
     <id>https://prestonp.github.com/specs/sample_tlaplus/</id>
     <content type="html">&lt;pre&gt;&lt;code&gt;---- MODULE MutualExclusion ----
 EXTENDS Integers, TLC
@@ -82,7 +82,7 @@ Liveness == &lt;&gt; MutualExclusion
   <entry>
     <title>Real Quint</title>
     <link href="https://prestonp.github.com/specs/sample_quint/" />
-    <updated>2025-04-04T07:51:37Z</updated>
+    <updated>2025-04-04T07:52:20Z</updated>
     <id>https://prestonp.github.com/specs/sample_quint/</id>
     <content type="html">&lt;pre&gt;&lt;code&gt;// -*- mode: Bluespec; -*-
 
