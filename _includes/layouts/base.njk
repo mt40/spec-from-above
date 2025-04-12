@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ metadata.language }}" data-theme="wireframe">
+<html lang="{{ metadata.language }}" data-theme="wireframe-lite">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,7 +91,7 @@
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
 
 		{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-		<div class="navbar bg-accent shadow-sm">
+		<div class="navbar bg-accent mt-10">
 			<div class="flex-1">
 				<a href="/" class="home-link btn btn-ghost text-xl">{{ metadata.title }}</a>
 			</div>
@@ -105,13 +105,17 @@
 			</div>
 		</div>
 
+		<div class="divider"></div>
+
 		<main id="skip">
 			<heading-anchors>
 				{{ content | safe }}
 			</heading-anchors>
 		</main>
 
-		<footer class="footer sm:footer-horizontal bg-accent text-accent-content p-10">
+		<div class="divider"></div>
+
+		<footer class="footer sm:footer-horizontal bg-accent text-accent-content p-10 mb-10">
 			<nav>
 				<h6 class="footer-title">Open Source</h6>
 				<a href="{{ metadata.github }}" class="link link-hover">GitHub</a>
