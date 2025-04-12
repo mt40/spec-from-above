@@ -42,6 +42,7 @@
 		{# Enable ligatures for code blocks #}
 		{%- css %}
 		/* Base font settings for all code elements */
+		pre,
 		pre code,
 		pre code *,
 		pre code span *,
@@ -85,7 +86,6 @@
 		{# view themes here: https://highlightjs.org/examples #}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/solarized-light.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-		{%- js %}{% include "public/js/highlight.js" %}{% endjs %}
 	</head>
 	<body>
 		<a href="#skip" class="visually-hidden">Skip to main content</a>

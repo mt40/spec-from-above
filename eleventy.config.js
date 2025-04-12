@@ -3,6 +3,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import markdownIt from "markdown-it";
 
 import pluginFilters from "./_config/filters.js";
 
@@ -106,6 +107,31 @@ export default async function(eleventyConfig) {
 	eleventyConfig.addShortcode("currentBuildDate", () => {
 		return (new Date()).toISOString();
 	});
+
+	eleventyConfig.addShortcode("renderMarkdown", function(value) {
+		if(!value) {
+			return ""
+		}
+
+		console.log("renderMarkdown")
+
+		// see full list of options: https://github.com/markdown-it/markdown-it?tab=readme-ov-file#init-with-presets-and-options
+		const md = markdownIt({
+			breaks: true,
+			linkify: true,
+			highlight: undefined,
+		})
+		md.renderer.rules.code_block  = function(tokens, idx, options, env, slf) {
+			const token = tokens[idx]
+			console.log("render code_block", token)
+		  
+			return  '<div class="code-sample"><p' + slf.renderAttrs(token) + '>' +
+					md.utils.escapeHtml(tokens[idx].content) +
+					'</p></div>\n'
+		}
+		const result = md.render(value);
+		return result
+	})
 
 	// Support TLA+ files as a custom template
 	// See: https://www.11ty.dev/docs/languages/custom/
