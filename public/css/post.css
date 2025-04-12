@@ -3,12 +3,14 @@
 	list-style-position: inside;
 }
 
+.post-description > p, code-sample {
+    margin-top: 1em;
+}
+
 .code-sample {
     white-space: pre-wrap;
     /* So if you have many fixed-size spans which get content dynamically, you might just prefer using word-wrap: break-word, as that way only the continuous words are broken in between, and in case it’s a sentence comprising many words, the spaces are adjusted to get intact words (no break within a word). */
     word-wrap: break-word;
     margin-left: 15em;
     margin-right: 15em;
-    margin-top: 1em;
-    margin-bottom: 1em;
 }
