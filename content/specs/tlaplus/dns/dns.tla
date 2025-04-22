@@ -1,5 +1,5 @@
 ---- MODULE dns ----
-EXTENDS TLC, Integers
+EXTENDS TLC, Integers, FiniteSets
 
 (******************************************************************************)
 (* States                                                                     *)
@@ -22,9 +22,13 @@ resolverIPSet == 100..103
 \* to resolve.
 \* The initial value is 1 but can be increased at any time until it reaches max value
 maxResultIP == 10
-initialResolverData == [cache |-> 1]
+initialResolverData == [cache |-> 1, crashed |-> FALSE]
 resolvers == [ip \in resolverIPSet |-> initialResolverData]
 
+\* Max crashes
+\* Number of resolvers that can crash. If this number is equal to or more than
+\* resolverIPSet, the system will not be able to recover.
+maxCrashes == 1
 
 (******************************************************************************)
 (* DNS query steps                                                            *)
@@ -79,6 +83,26 @@ updateResolver(ip) == resolvers' = [
 DNSUpdate == /\ \E ip \in resolverIPSet: updateResolver(ip)
              /\ UNCHANGED <<state, resolverIP, resultIP>>
 
+\* Simululate a simple crash fault.
+\* At any time, a resolver can crash and stop responding. It is expected
+\* that the system can recover by querying another resolver.
+FirstLevelResolverCrash == 
+    LET 
+        crashedResolverIPs == {ip \in resolverIPSet: resolvers[ip].crashed}
+        getCrashedResolverData == [
+            cache |-> 0,
+            crashed |-> TRUE
+        ]
+    IN 
+        /\ state = "resolve_to_ip"
+        /\ Cardinality(crashedResolverIPs) < maxCrashes
+        /\ resolvers' = [
+                resolvers 
+                EXCEPT ![resolverIP] = getCrashedResolverData
+            ]
+        /\ resolverIP' \in resolverIPSet \ crashedResolverIPs
+        /\ UNCHANGED <<state, resultIP>>
+
 (******************************************************************************)
 (* Specification metadata                                                     *)
 (******************************************************************************)
@@ -90,6 +114,7 @@ Init == /\ state = "query_root_servers"
 Resolution == \/ RootServers
               \/ TLDResolver
               \/ FirstLevelResolver
+              \/ FirstLevelResolverCrash
               \/ Reset
 
 \* DNS cache can be updated at any time
