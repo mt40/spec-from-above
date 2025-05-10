@@ -8,7 +8,11 @@ function tlaHljs(hljs) {
             'PICK', 'PROOF', 'PROPOSITION', 'PROOF', 'PROPOSITION', 'PROVE', 'QED',
             'RECURSIVE', 'STATE', 'SUBSET', 'SUFFICES', 'TAKE', 'TEMPORAL',
             'THEN', 'THEOREM', 'UNCHANGED', 'UNION', 'USE', 'VARIABLE', 'VARIABLES',
-            'WITH', 'WITNESS'
+            'WITH', 'WITNESS',
+            // Cfg-specific keywords
+            'SPECIFICATION', 'INVARIANT', 'PROPERTY', 'CONSTRAINT', 'SYMMETRY',
+            'CONSTANT', 'CONSTANTS', 'INIT', 'NEXT', 'INITIALLY', 'ALWAYS',
+            'EVENTUALLY', 'TEMPORAL', 'TEMPORALITY', 'TEMPORALITIES', 'CHECK_DEADLOCK', 'PROPERTIES'
         ],
         literal: [
             'FALSE', 'TRUE', 'BOOLEAN', 'STRING', 'Int', 'Nat', 'Real', 'Seq',

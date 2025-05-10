@@ -99,7 +99,7 @@ export default async function(eleventyConfig) {
 	eleventyConfig.addPlugin(pluginFilters);
 
 	eleventyConfig.addPlugin(IdAttributePlugin, {
-		// by default we use Eleventy’s built-in `slugify` filter:
+		// by default we use Eleventy's built-in `slugify` filter:
 		// slugify: eleventyConfig.getFilter("slugify"),
 		// selector: "h1,h2,h3,h4,h5,h6", // default
 	});
@@ -138,8 +138,27 @@ export default async function(eleventyConfig) {
 	eleventyConfig.addTemplateFormats("tla");
 	eleventyConfig.addExtension("tla", {
 		outputFileExtension: "html",
-		compile: async (inputContent) => {
-			const output = `<pre><code>${inputContent}</code></pre>`;
+		compile: async (inputContent, inputPath) => {
+			// Check for corresponding .cfg file
+			const cfgPath = inputPath.replace('.tla', '.cfg');
+			let cfgContent = '';
+			
+			try {
+				cfgContent = await import('fs').then(fs => 
+					fs.promises.readFile(cfgPath, 'utf8')
+				);
+			} catch (error) {
+				// No config file exists
+				cfgContent = 'This spec has no config';
+			}
+
+			const output = `
+				<pre><code class="language-tla">${inputContent}</code></pre>
+				<div class="cfg-section">
+					<h3 class="cfg-title">Configuration File</h3>
+					<pre><code class="language-tla">${cfgContent}</code></pre>
+				</div>
+			`;
 
 			return async () => {
 				return output;
