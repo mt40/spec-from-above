@@ -1,0 +1,14 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+[CHANGELOG.md](mdc:CHANGELOG.md) [README.md](mdc:README.md) [ELEVENTY_README.md](mdc:ELEVENTY_README.md) [eleventy.config.js](mdc:eleventy.config.js)
+
+For each feature, always:
+1. Ask back any point that you are not sure what I mean or how to implement
+2. Give short design description of your solution
+3. If I agree, give description of implementation steps
+4. If I agree, do the implementation step by step
+5. Give me instructions on how to test each step
+6. After all steps are done, add a line for this feature in CHANGELOG.md
