@@ -1,0 +1,13 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "humao.rest-client"
+      ]
+    }
+  }
+}

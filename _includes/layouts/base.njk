@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="{{ metadata.language }}" data-theme="wireframe-lite">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{ title or metadata.title }}</title>
+		<meta name="description" content="{{ description or metadata.description }}">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+
+		{#- Uncomment this if you'd like folks to know that you used Eleventy to build your site!  #}
+		<meta name="generator" content="{{ eleventy.generator }}">
+
+		{# Daisy UI CSS components #}
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
+		{# A ligature font #}
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+
+		{#-
+		Plain-text bundles are provided via the `eleventy-plugin-bundle` plugin:
+		1. CSS:
+			* Add to a per-page bundle using `{% css %}{% endcss %}`
+			* Retrieve bundle content using `{% getBundle "css" %}` or `{% getBundleFileUrl "css" %}`
+		2. Or for JavaScript:
+			* Add to a per-page bundle using `{% js %}{% endjs %}`
+			* Retrieve via `{% getBundle "js" %}` or `{% getBundleFileUrl "js" %}`
+		3. Learn more: https://github.com/11ty/eleventy-plugin-bundle
+		#}
+
+		{#- Add an arbitrary string to the bundle #}
+		{%- css %}/* This is an arbitrary CSS string added to the bundle */{% endcss %}
+		{#- Add the contents of a file to the bundle #}
+		{%- css %}{% include "public/css/index.css" %}{% endcss %}
+		{%- css %}{% include "public/css/theme.css" %}{% endcss %}
+		{#- Or you can add from node_modules #}
+		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
+
+		{# Enable ligatures for code blocks #}
+		{%- css %}
+		/* Base font settings for all code elements */
+		pre,
+		pre code,
+		pre code *,
+		pre code span *,
+		.hljs,
+		.hljs *,
+		.hljs span *,
+		.code-sample,
+		.code-sample *,
+		.code-sample span * {
+			font-family: var(--font-family-monospace) !important;
+			font-variant-ligatures: common-ligatures !important;
+			font-feature-settings: 
+				"liga" 1,    /* Standard ligatures */
+				"calt" 1,    /* Contextual alternates */
+				"dlig" 1,    /* Discretionary ligatures */
+				"ss01" 1,    /* Style set 1 - includes \/ for ∨ */
+				"ss02" 1,    /* Style set 2 - includes <> for ≠ */
+				"ss03" 1,    /* Style set 3 - includes more operators */
+				"ss04" 1,    /* Style set 4 - includes more operators */
+				"ss05" 1,    /* Style set 5 - includes more operators */
+				"ss06" 1,    /* Style set 6 - includes more operators */
+				"ss07" 1 !important;    /* Style set 7 - includes more operators */
+		}
+
+		/* Override any highlight.js font settings */
+		.hljs {
+			font-family: var(--font-family-monospace) !important;
+		}
+		{% endcss %}
+
+		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
+		<style>{% getBundle "css" %}</style>
+		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
+		{#- <link rel="stylesheet" href="{% getBundleFileUrl "css" %}"> #}
+
+		{#- Add the heading-anchors web component to the JavaScript bundle #}
+		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
+
+		{# Add highlight.js CSS and JavaScript #}
+
+		{# view themes here: https://highlightjs.org/examples #}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/solarized-light.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+		<div class="navbar bg-accent mt-10">
+			<div class="flex-1">
+				<a href="/" class="home-link btn btn-ghost text-xl">{{ metadata.title }}</a>
+			</div>
+			<div class="flex-none">
+				<ul class="menu menu-horizontal px-1">
+					{%- for entry in collections.all | eleventyNavigation %}
+						<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
+					{%- endfor %}
+					<li class="nav-item"><a href="{{ metadata.contribute_url }}">Contribute</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="divider"></div>
+
+		<main id="skip">
+			<heading-anchors>
+				{{ content | safe }}
+			</heading-anchors>
+		</main>
+
+		<div class="divider"></div>
+
+		<footer class="footer sm:footer-horizontal bg-accent text-accent-content p-10 mb-10">
+			<nav>
+				<h6 class="footer-title">Open Source</h6>
+				<a href="{{ metadata.github }}" class="link link-hover">GitHub</a>
+			</nav>
+			<nav>
+				<h6 class="footer-title">Author</h6>
+				<a href="mailto:{{ metadata.author.email }}" class="link link-hover">{{ metadata.author.email }}</a>
+				<a href="/blog" class="link link-hover">My Blog</a>
+			</nav>
+			<nav>
+				<a href="https://www.11ty.dev/" class="link link-hover">Made with {{ eleventy.generator }}</a>
+			</nav>
+		</footer>
+
+		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
+		<script type="module" src="{% getBundleFileUrl "js" %}"></script>
+	</body>
+</html>
