@@ -15,19 +15,22 @@ For each TLA+ specification (*.tla file), the system should:
 This conditional display ensures users can see the configuration when available, while clearly indicating when no configuration exists.
 
 1. Template Modification
-   - [x] 1.1 Modify TLA+ spec display template
-   - [x] 1.2 Add logic to check for and display .cfg file
+   1.1 Modify TLA+ spec display template
+   1.2 Add logic to check for and display .cfg file
 
 2. File Path Resolution
-   - [x] 2.1 Implement path construction for .cfg files
-   - [x] 2.2 Add file existence check using 11ty utilities
+   2.1 Implement path construction for .cfg files
+   2.2 Add file existence check using 11ty utilities
 
 3. Display Logic
-   - [x] 3.1 Add conditional display for TLA+ spec and config
-   - [x] 3.2 Implement "This spec has no config" fallback
+   3.1 Add conditional display for TLA+ spec and config
+   3.2 Implement "This spec has no config" fallback
 
 4. Styling
-   - [x] 4.1 Implement syntax highlighting for config files
-   - [x] 4.2 Support highlighting for TLA+ keywords in cfg files (e.g., "SPECIFICATION")
-   - [x] 4.3 Add UI marker/separator to indicate cfg file section
-   - [x] 4.4 Fix block comment highlighting for TLA+ files (e.g., (* ... *)) 
+   4.1 Implement syntax highlighting for config files
+   4.2 Support highlighting for TLA+ keywords in cfg files (e.g., "SPECIFICATION")
+   4.3 Add UI marker/separator to indicate cfg file section
+   4.4 Fix block comment highlighting for TLA+ files (e.g., (* ... *))
+
+## V2.0: TLA+ Improvements
+- Fixed TLA+ angle brackets (e.g., `<<hasLock, lock, pc>>`) being incorrectly rendered as HTML tags 

@@ -152,11 +152,15 @@ export default async function(eleventyConfig) {
 				cfgContent = 'This spec has no config';
 			}
 
+			// Escape the content to prevent HTML interpretation
+			const escapedInputContent = markdownIt().utils.escapeHtml(inputContent);
+			const escapedCfgContent = markdownIt().utils.escapeHtml(cfgContent);
+
 			const output = `
-				<pre><code class="language-tla">${inputContent}</code></pre>
+				<pre><code class="language-tla">${escapedInputContent}</code></pre>
 				<div class="cfg-section">
 					<h3 class="cfg-title">Configuration File</h3>
-					<pre><code class="language-tla">${cfgContent}</code></pre>
+					<pre><code class="language-tla">${escapedCfgContent}</code></pre>
 				</div>
 			`;
 
