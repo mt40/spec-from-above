@@ -33,4 +33,5 @@ This conditional display ensures users can see the configuration when available,
    4.4 Fix block comment highlighting for TLA+ files (e.g., (* ... *))
 
 ## V2.0: TLA+ Improvements
-- Fixed TLA+ angle brackets (e.g., `<<hasLock, lock, pc>>`) being incorrectly rendered as HTML tags 
+- Fixed TLA+ angle brackets (e.g., `<<hasLock, lock, pc>>`) being incorrectly rendered as HTML tags
+- Added syntax highlighting for TLA+ tokens: `<<`, `>>`, `[`, `]`, `\in`, `==`, `/\`, `\/` 

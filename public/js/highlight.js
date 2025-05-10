@@ -17,15 +17,20 @@ function tlaHljs(hljs) {
         literal: [
             'FALSE', 'TRUE', 'BOOLEAN', 'STRING', 'Int', 'Nat', 'Real', 'Seq',
         ],
-        punctuation: [',', '(', ')', '{', '}', '[', ']', ']_', '>>_'],
-        // https://apalache-mc.org/docs/lang/standard-operators.html
-        operator: [
-            '/\\', '\\/', '<>', '=>', '<=>', '~>', '[]', '<>', 'ENABLED', 'UNCHANGED',
-            '\\A', '\\E', '\\in', '\\notin', '\\subseteq', '\\union', '\\intersect',
-            '\\X', '\\cdot', '\\oplus', '\\ominus', '\\otimes', '\\oslash',
-            'WF_', 'SF_', '|->', '..', '^+', '^*', '^#', '^'
-        ]
     };
+
+    // https://apalache-mc.org/docs/lang/standard-operators.html
+    const operators = [
+        '==', '/\\\\', '\\\\/', '=>', '<=>', '~>', '[]', '<>',
+        '\\\\A', '\\\\E', '\\\\in', '\\\\notin', '\\\\subseteq', '\\\\union', '\\\\intersect',
+        'WF_', 'SF_', '\\|->', '<<', '>>', '\\[', '\\]', '{', '}', '\\(', '\\)', '!', '\\+', '\\*', '\\^#', '\\^'
+    ];
+
+    const operatorPatterns = operators.map(op => ({
+        className: 'operator',
+        begin: op,
+        relevance: 0
+    }));
 
     return {
         name: 'TLA+',
@@ -36,6 +41,7 @@ function tlaHljs(hljs) {
             hljs.C_NUMBER_MODE,
             hljs.COMMENT('\\\\\\*', '$'),
             hljs.COMMENT('\\(\\*', '\\*\\)'),
+            ...operatorPatterns
         ],
     };
 }
